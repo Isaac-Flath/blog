@@ -53,7 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Notebooks with MyST Markdown" href="markdown-notebooks.html" />
+    <link rel="prev" title="Welcome to your Jupyter Book" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -98,21 +98,6 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="markdown.html">
-   Markdown Files
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="notebooks.html">
-   Content with notebooks
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="markdown-notebooks.html">
-   Notebooks with MyST Markdown
-  </a>
- </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Binary Search
@@ -217,6 +202,34 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-setup">
+   Problem Setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-function">
+   Step Function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-test-loop">
+   The Test Loop
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-expirament">
+   The Expirament
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -229,6 +242,34 @@ const thebe_selector_output = ".output, .cell_output"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problem-setup">
+   Problem Setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-function">
+   Step Function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-test-loop">
+   The Test Loop
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-expirament">
+   The Expirament
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -246,27 +287,256 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
+<div class="section" id="problem-setup">
+<h2>Problem Setup<a class="headerlink" href="#problem-setup" title="Permalink to this headline">¶</a></h2>
+<p>For this problem we will be fed a direction, but we won’t know the exact coordinate.  Here we create the functions that given a current location and a target location gives us the direction (ie DR, or D)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">v</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;;</span>
+<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">exception</span> <span class="nc">Damn</span> <span class="k">of</span> <span class="kt">string</span>
+
+<span class="k">let</span> <span class="n">get_width_dir</span> <span class="n">bw</span> <span class="n">cw</span> <span class="o">=</span> 
+  <span class="k">match</span> <span class="n">compare</span> <span class="n">cw</span> <span class="n">bw</span>  <span class="k">with</span>
+    <span class="o">|</span><span class="mi">0</span> <span class="o">-&gt;</span> <span class="s2">&quot;&quot;</span><span class="o">|</span><span class="mi">1</span> <span class="o">-&gt;</span> <span class="s2">&quot;L&quot;</span><span class="o">|(-</span><span class="mi">1</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;R&quot;</span><span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">Damn</span> <span class="s2">&quot;error&quot;</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">get_height_dir</span> <span class="n">bh</span> <span class="n">ch</span> <span class="o">=</span> 
+  <span class="k">match</span> <span class="n">compare</span> <span class="n">ch</span> <span class="n">bh</span> <span class="k">with</span>
+    <span class="o">|</span><span class="mi">0</span> <span class="o">-&gt;</span> <span class="s2">&quot;&quot;</span> <span class="o">|</span><span class="mi">1</span> <span class="o">-&gt;</span> <span class="s2">&quot;U&quot;</span> <span class="o">|(-</span><span class="mi">1</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;D&quot;</span><span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">Damn</span> <span class="s2">&quot;error&quot;</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">get_direction</span> <span class="n">currentloc</span> <span class="n">bombloc</span> <span class="o">=</span> 
+  <span class="k">let</span> <span class="n">bw</span><span class="o">,</span><span class="n">bh</span> <span class="o">=</span> <span class="n">bombloc</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">((</span><span class="n">cw</span><span class="o">,</span><span class="n">ch</span><span class="o">),(_,_,_,_))</span> <span class="o">=</span> <span class="n">currentloc</span> <span class="k">in</span>
+
+  <span class="o">(</span><span class="n">get_height_dir</span> <span class="n">bh</span> <span class="n">ch</span><span class="o">)</span> <span class="o">^</span> <span class="o">(</span><span class="n">get_width_dir</span> <span class="n">bw</span> <span class="n">cw</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val v : int = 2
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>exception Damn of string
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val get_width_dir : &#39;a -&gt; &#39;a -&gt; string = &lt;fun&gt;
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val get_height_dir : &#39;a -&gt; &#39;a -&gt; string = &lt;fun&gt;
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val get_direction : (&#39;a * &#39;b) * (&#39;c * &#39;d * &#39;e * &#39;f) -&gt; &#39;a * &#39;b -&gt; string =
+  &lt;fun&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="step-function">
+<h2>Step Function<a class="headerlink" href="#step-function" title="Permalink to this headline">¶</a></h2>
+<p>Next we need to write out step function.  Every step is to the center of the available board, and we shrink the available board with each step as we are given the location.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">take_step</span> <span class="n">currentloc</span> <span class="n">dir</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">((</span><span class="n">cw</span><span class="o">,</span><span class="n">ch</span><span class="o">),(</span><span class="n">w0</span><span class="o">,</span><span class="n">w1</span><span class="o">,</span><span class="n">h0</span><span class="o">,</span><span class="n">h1</span><span class="o">))</span> <span class="o">=</span> <span class="n">currentloc</span> <span class="k">in</span>
+  <span class="k">match</span> <span class="n">dir</span> <span class="k">with</span> 
+        <span class="o">|</span><span class="s2">&quot;L&quot;</span> <span class="o">-&gt;</span> <span class="o">(((</span><span class="n">w0</span><span class="o">+</span><span class="n">cw</span><span class="o">)/</span><span class="mi">2</span><span class="o">,</span><span class="n">ch</span><span class="o">),(</span><span class="n">w0</span><span class="o">,</span><span class="n">cw</span><span class="o">,</span><span class="n">ch</span><span class="o">,</span><span class="n">ch</span><span class="o">))</span>
+        <span class="o">|</span><span class="s2">&quot;R&quot;</span> <span class="o">-&gt;</span> <span class="o">(((</span><span class="n">cw</span><span class="o">+</span><span class="n">w1</span><span class="o">)/</span><span class="mi">2</span><span class="o">,</span><span class="n">ch</span><span class="o">),(</span><span class="n">cw</span><span class="o">,</span><span class="n">w1</span><span class="o">,</span><span class="n">ch</span><span class="o">,</span><span class="n">ch</span><span class="o">))</span>
+        <span class="o">|</span><span class="s2">&quot;U&quot;</span> <span class="o">-&gt;</span> <span class="o">((</span><span class="n">cw</span><span class="o">,(</span><span class="n">h0</span><span class="o">+</span><span class="n">ch</span><span class="o">)/</span><span class="mi">2</span><span class="o">),(</span><span class="n">cw</span><span class="o">,</span><span class="n">cw</span><span class="o">,</span><span class="n">h0</span><span class="o">,</span><span class="n">ch</span><span class="o">))</span>
+        <span class="o">|</span><span class="s2">&quot;D&quot;</span> <span class="o">-&gt;</span> <span class="o">((</span><span class="n">cw</span><span class="o">,(</span><span class="n">ch</span><span class="o">+</span><span class="n">h1</span><span class="o">)/</span><span class="mi">2</span><span class="o">),(</span><span class="n">cw</span><span class="o">,</span><span class="n">cw</span><span class="o">,</span><span class="n">ch</span><span class="o">,</span><span class="n">h1</span><span class="o">))</span>
+        <span class="o">|</span><span class="s2">&quot;UL&quot;</span> <span class="o">-&gt;</span> <span class="o">(((</span><span class="n">w0</span><span class="o">+</span><span class="n">cw</span><span class="o">)/</span><span class="mi">2</span><span class="o">,(</span><span class="n">h0</span><span class="o">+</span><span class="n">ch</span><span class="o">)/</span><span class="mi">2</span><span class="o">),(</span><span class="n">w0</span><span class="o">,</span><span class="n">cw</span><span class="o">,</span><span class="n">h0</span><span class="o">,</span><span class="n">ch</span><span class="o">))</span>
+        <span class="o">|</span><span class="s2">&quot;UR&quot;</span> <span class="o">-&gt;</span> <span class="o">(((</span><span class="n">cw</span><span class="o">+</span><span class="n">w1</span><span class="o">)/</span><span class="mi">2</span><span class="o">,(</span><span class="n">w0</span><span class="o">+</span><span class="n">ch</span><span class="o">)/</span><span class="mi">2</span><span class="o">),(</span><span class="n">cw</span><span class="o">,</span><span class="n">w1</span><span class="o">,</span><span class="n">h0</span><span class="o">,</span><span class="n">ch</span><span class="o">))</span>
+        <span class="o">|</span><span class="s2">&quot;DL&quot;</span> <span class="o">-&gt;</span> <span class="o">(((</span><span class="n">w0</span><span class="o">+</span><span class="n">cw</span><span class="o">)/</span><span class="mi">2</span><span class="o">,(</span><span class="n">ch</span><span class="o">+</span><span class="n">h1</span><span class="o">)/</span><span class="mi">2</span><span class="o">),(</span><span class="n">w0</span><span class="o">,</span><span class="n">cw</span><span class="o">,</span><span class="n">ch</span><span class="o">,</span><span class="n">h1</span><span class="o">))</span>
+        <span class="o">|</span><span class="s2">&quot;DR&quot;</span> <span class="o">-&gt;</span> <span class="o">(((</span><span class="n">cw</span><span class="o">+</span><span class="n">w1</span><span class="o">)/</span><span class="mi">2</span><span class="o">,(</span><span class="n">ch</span><span class="o">+</span><span class="n">h1</span><span class="o">)/</span><span class="mi">2</span><span class="o">),(</span><span class="n">cw</span><span class="o">,</span><span class="n">w1</span><span class="o">,</span><span class="n">ch</span><span class="o">,</span><span class="n">h1</span><span class="o">))</span>
+        <span class="o">|_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">Damn</span> <span class="s2">&quot;error&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val take_step :
+  (int * int) * (int * int * int * int) -&gt;
+  string -&gt; (int * int) * (int * int * int * int) = &lt;fun&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-test-loop">
+<h2>The Test Loop<a class="headerlink" href="#the-test-loop" title="Permalink to this headline">¶</a></h2>
+<p>We will create a test loop that will iterate through until it finds a solution, with some printing so we can see what it’s doing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">print_step</span> <span class="n">bl</span> <span class="n">cl</span> <span class="n">bd</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="o">((</span><span class="n">ow</span><span class="o">,</span><span class="n">oh</span><span class="o">),(</span><span class="n">bw1</span><span class="o">,</span><span class="n">bw2</span><span class="o">,</span><span class="n">bh1</span><span class="o">,</span><span class="n">bh2</span><span class="o">))</span> <span class="o">=</span> <span class="n">cl</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">bw</span><span class="o">,</span> <span class="n">bh</span> <span class="o">=</span> <span class="n">bl</span> <span class="k">in</span>
+    <span class="n">print_endline</span> <span class="o">(</span><span class="s2">&quot;Board: &quot;</span> <span class="o">^</span> <span class="n">string_of_int</span> <span class="n">bw1</span> <span class="o">^</span> <span class="s2">&quot;x&quot;</span><span class="o">^</span> <span class="n">string_of_int</span> <span class="n">bw2</span> <span class="o">^</span> <span class="s2">&quot;x&quot;</span><span class="o">^</span> <span class="n">string_of_int</span> <span class="n">bh1</span> <span class="o">^</span> <span class="s2">&quot;x&quot;</span><span class="o">^</span> <span class="n">string_of_int</span> <span class="n">bh2</span> <span class="o">^</span> <span class="s2">&quot;  |  &quot;</span> <span class="o">^</span>
+              <span class="s2">&quot;Bomb: &quot;</span> <span class="o">^</span> <span class="n">string_of_int</span> <span class="n">bw</span> <span class="o">^</span> <span class="s2">&quot;x&quot;</span> <span class="o">^</span> <span class="n">string_of_int</span> <span class="n">bh</span> <span class="o">^</span> <span class="s2">&quot;  |  &quot;</span> <span class="o">^</span> 
+              <span class="s2">&quot;Loc: &quot;</span> <span class="o">^</span> <span class="n">string_of_int</span> <span class="n">ow</span> <span class="o">^</span> <span class="s2">&quot;x&quot;</span> <span class="o">^</span> <span class="n">string_of_int</span> <span class="n">oh</span> <span class="o">^</span> <span class="s2">&quot;  |  &quot;</span> <span class="o">^</span> 
+              <span class="s2">&quot;Direction: &quot;</span> <span class="o">^</span> <span class="n">bd</span><span class="o">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val print_step :
+  int * int -&gt; (int * int) * (int * int * int * int) -&gt; string -&gt; unit =
+  &lt;fun&gt;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="nn">List</span><span class="p">.</span><span class="n">fold_left</span> <span class="o">(</span><span class="k">fun</span> <span class="n">a</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">x</span><span class="o">)</span> <span class="mi">0</span> <span class="o">[</span><span class="mi">1</span><span class="o">;</span><span class="mi">2</span><span class="o">;</span><span class="mi">3</span><span class="o">]</span>
+<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">loc</span> <span class="n">acc</span> <span class="n">printf</span> <span class="n">bl</span><span class="o">=</span>
+    <span class="k">let</span> <span class="n">bombdir</span> <span class="o">=</span> <span class="n">get_direction</span> <span class="n">loc</span> <span class="n">bl</span> <span class="k">in</span>
+    <span class="n">printf</span> <span class="n">bl</span> <span class="n">loc</span> <span class="n">bombdir</span><span class="o">;</span>
+
+    <span class="k">let</span> <span class="n">out</span> <span class="o">=</span> <span class="n">take_step</span> <span class="n">loc</span> <span class="n">bombdir</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="o">((</span><span class="n">ow</span><span class="o">,</span><span class="n">oh</span><span class="o">),(</span><span class="n">bw1</span><span class="o">,</span><span class="n">bw2</span><span class="o">,</span><span class="n">bh1</span><span class="o">,</span><span class="n">bh2</span><span class="o">))</span> <span class="o">=</span> <span class="n">out</span> <span class="k">in</span>
+
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">ow</span><span class="o">,</span><span class="n">oh</span><span class="o">)=(</span><span class="n">bl</span><span class="o">)</span> <span class="k">then</span> <span class="s2">&quot;success&quot;</span> 
+    <span class="k">else</span> <span class="k">if</span> <span class="n">acc</span> <span class="o">&gt;</span> <span class="mi">200</span> <span class="k">then</span> <span class="s2">&quot;200 iters&quot;</span>
+    <span class="k">else</span> <span class="n">loop</span> <span class="n">out</span> <span class="o">(</span><span class="n">acc</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="n">printf</span> <span class="n">bl</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>- : int = 6
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val loop :
+  (int * int) * (int * int * int * int) -&gt;
+  int -&gt;
+  (int * int -&gt; (int * int) * (int * int * int * int) -&gt; string -&gt; &#39;a) -&gt;
+  int * int -&gt; string = &lt;fun&gt;
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-expirament">
+<h2>The Expirament<a class="headerlink" href="#the-expirament" title="Permalink to this headline">¶</a></h2>
+<p>We can see that even when run with a pretty large random size and locations setup, we solve the problem in relatively few steps.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">sz</span> <span class="o">=</span> <span class="mi">1_000_000</span>
+<span class="k">let</span> <span class="n">w</span><span class="o">,</span><span class="n">h</span> <span class="o">=</span> <span class="o">(</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">sz</span><span class="o">,</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">sz</span><span class="o">)</span>
+<span class="k">let</span> <span class="n">current_loc</span> <span class="o">=</span> <span class="o">(</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">w</span><span class="o">,</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">h</span><span class="o">)</span>
+<span class="k">let</span> <span class="n">bomb_loc</span> <span class="o">=</span> <span class="o">(</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">w</span><span class="o">,</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">h</span><span class="o">)</span>
+<span class="k">let</span> <span class="n">board</span> <span class="o">=</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="n">w</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="n">h</span><span class="o">)</span>
+<span class="k">let</span> <span class="n">current_loc</span> <span class="o">=</span> <span class="o">(</span><span class="n">current_loc</span><span class="o">,</span><span class="n">board</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val sz : int = 1000000
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val w : int = 326685
+val h : int = 809344
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val current_loc : int * int = (291071, 435030)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val bomb_loc : int * int = (298160, 349399)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val board : int * int * int * int = (0, 326685, 0, 809344)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val current_loc : (int * int) * (int * int * int * int) =
+  ((291071, 435030), (0, 326685, 0, 809344))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="n">loop</span> <span class="n">current_loc</span> <span class="mi">0</span> <span class="n">print_step</span> <span class="n">bomb_loc</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 0x326685x0x809344  |  Bomb: 298160x349399  |  Loc: 291071x435030  |  Direction: UR
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 291071x326685x0x435030  |  Bomb: 298160x349399  |  Loc: 308878x217515  |  Direction: DL
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 291071x308878x217515x435030  |  Bomb: 298160x349399  |  Loc: 299974x326272  |  Direction: DL
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 291071x299974x326272x435030  |  Bomb: 298160x349399  |  Loc: 295522x380651  |  Direction: UR
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 295522x299974x326272x380651  |  Bomb: 298160x349399  |  Loc: 297748x335861  |  Direction: DR
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 297748x299974x335861x380651  |  Bomb: 298160x349399  |  Loc: 298861x358256  |  Direction: UL
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 297748x298861x335861x358256  |  Bomb: 298160x349399  |  Loc: 298304x347058  |  Direction: DL
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 297748x298304x347058x358256  |  Bomb: 298160x349399  |  Loc: 298026x352657  |  Direction: UR
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298026x298304x347058x352657  |  Bomb: 298160x349399  |  Loc: 298165x325202  |  Direction: DL
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298026x298165x325202x352657  |  Bomb: 298160x349399  |  Loc: 298095x338929  |  Direction: DR
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298095x298165x338929x352657  |  Bomb: 298160x349399  |  Loc: 298130x345793  |  Direction: DR
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298130x298165x345793x352657  |  Bomb: 298160x349399  |  Loc: 298147x349225  |  Direction: DR
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298147x298165x349225x352657  |  Bomb: 298160x349399  |  Loc: 298156x350941  |  Direction: UR
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298156x298165x349225x350941  |  Bomb: 298160x349399  |  Loc: 298160x324544  |  Direction: D
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x324544x350941  |  Bomb: 298160x349399  |  Loc: 298160x337742  |  Direction: D
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x337742x350941  |  Bomb: 298160x349399  |  Loc: 298160x344341  |  Direction: D
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x344341x350941  |  Bomb: 298160x349399  |  Loc: 298160x347641  |  Direction: D
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x347641x350941  |  Bomb: 298160x349399  |  Loc: 298160x349291  |  Direction: D
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349291x350941  |  Bomb: 298160x349399  |  Loc: 298160x350116  |  Direction: U
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349291x350116  |  Bomb: 298160x349399  |  Loc: 298160x349703  |  Direction: U
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349291x349703  |  Bomb: 298160x349399  |  Loc: 298160x349497  |  Direction: U
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349291x349497  |  Bomb: 298160x349399  |  Loc: 298160x349394  |  Direction: D
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349394x349497  |  Bomb: 298160x349399  |  Loc: 298160x349445  |  Direction: U
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349394x349445  |  Bomb: 298160x349399  |  Loc: 298160x349419  |  Direction: U
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349394x349419  |  Bomb: 298160x349399  |  Loc: 298160x349406  |  Direction: U
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349394x349406  |  Bomb: 298160x349399  |  Loc: 298160x349400  |  Direction: U
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349394x349400  |  Bomb: 298160x349399  |  Loc: 298160x349397  |  Direction: D
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349397x349400  |  Bomb: 298160x349399  |  Loc: 298160x349398  |  Direction: D
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>- : string = &quot;success&quot;
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -297,11 +567,11 @@ const thebe_selector_output = ".output, .cell_output"
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="markdown-notebooks.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Notebooks with MyST Markdown</p>
+            <p class="prev-next-title">Welcome to your Jupyter Book</p>
         </div>
     </a>
 </div>
