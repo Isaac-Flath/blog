@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to your Jupyter Book &#8212; Blog</title>
+    <title>blog &#8212; Blog</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -53,7 +53,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Markdown Files" href="markdown.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -91,8 +90,8 @@ const thebe_selector_output = ".output, .cell_output"
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
- <li class="toctree-l1 current">
-  <a class="reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
    Welcome to your Jupyter Book
   </a>
  </li>
@@ -159,7 +158,7 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/intro.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/README.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -179,7 +178,7 @@ const thebe_selector_output = ".output, .cell_output"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fintro.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FREADME.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -207,7 +206,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Welcome to your Jupyter Book</h1>
+                <h1>blog</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -218,25 +217,17 @@ const thebe_selector_output = ".output, .cell_output"
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="welcome-to-your-jupyter-book">
-<h1>Welcome to your Jupyter Book<a class="headerlink" href="#welcome-to-your-jupyter-book" title="Permalink to this headline">¶</a></h1>
-<p>This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out <a class="reference external" href="https://jupyterbook.org">the Jupyter Book documentation</a> for more information.</p>
-<p>Check out the content pages bundled with this sample book to see more.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
-<li class="toctree-l1"><a class="reference internal" href="BinarySearch.html">Binary Search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="BinarySearch.html#problem-setup">Problem Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="BinarySearch.html#step-function">Step Function</a></li>
-<li class="toctree-l1"><a class="reference internal" href="BinarySearch.html#the-test-loop">The Test Loop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="BinarySearch.html#the-expirament">The Expirament</a></li>
-</ul>
-</div>
+  <div class="tex2jax_ignore mathjax_ignore section" id="blog">
+<h1>blog<a class="headerlink" href="#blog" title="Permalink to this headline">¶</a></h1>
+<p>To update blog:</p>
+<ol class="simple">
+<li><p>Write or edit blog post</p></li>
+<li><p>cd to repo root</p></li>
+<li><p>Update <code class="docutils literal notranslate"><span class="pre">_toc.yml</span></code> if needed</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">jupyter-book</span> <span class="pre">build</span> <span class="pre">.</span></code>  You can then preview your stuff in the <code class="docutils literal notranslate"><span class="pre">_build/html</span> <span class="pre">directory</span></code></p></li>
+<li><p>Push changes to git</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">ghp-import</span> <span class="pre">-n</span> <span class="pre">-p</span> <span class="pre">-f</span> <span class="pre">_build/html</span></code></p></li>
+</ol>
 </div>
 
     <script type="text/x-thebe-config">
@@ -264,13 +255,6 @@ It does not go in-depth into any particular topic - check out <a class="referenc
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="markdown.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Markdown Files</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
 </div>
             
         </div>
