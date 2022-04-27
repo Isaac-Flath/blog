@@ -423,13 +423,7 @@ const thebe_selector_output = ".output, .cell_output"
 <blockquote>
 <div><p>A walkthrough of key components to a pytorch CycleGAN implementation.</p>
 </div></blockquote>
-<ul class="simple">
-<li><p>toc: true</p></li>
-<li><p>badges: true</p></li>
-<li><p>comments: true</p></li>
-<li><p>author: Isaac Flath</p></li>
-<li><p>categories: [Computer Vision, GAN]</p></li>
-</ul>
+<p>Author: Isaac Flath</p>
 <p>In this post I will build on my <a class="reference external" href="https://isaac-flath.github.io/fastblog/computer%20vision/gan/2021/02/20/GANBasics.html">previous</a> <a class="reference external" href="https://isaac-flath.github.io/fastblog/computer%20vision/gan/2021/03/01/StyleGanComponents.html">posts</a> on GANs and talk about CycleGAN.</p>
 <p>In StyleGAN, we took noise and generated an image realistic enough to fool the discriminator.  In CycleGAN we take an image and modify it to a different class to make that modified image realistic enough to fool the discriminator into believing it’s that class.</p>
 <p>I am going to walk through a great <a class="reference external" href="https://github.com/aitorzip/PyTorch-CycleGAN">Pytorch CycleGAN implementation</a> and explain what the pieces are doing in plain english so anyone can understand the important bits without diving through lots of code or reading an academic paper.</p>
@@ -447,7 +441,7 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="transforms">
 <h2>Transforms<a class="headerlink" href="#transforms" title="Permalink to this headline">¶</a></h2>
 <p>This implementation of CycleGAN is using basic transforms that are not unique to CycleGAN so I won’t be diving into detail on those in this post.  Please post a comment or message me on twitter if you have questions or want a post that talks in more detail on transforms.</p>
-<div class="cell docutils container">
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transforms_train</span> <span class="o">=</span> <span class="p">[</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">256</span><span class="o">*</span><span class="mf">1.12</span><span class="p">),</span> <span class="n">Image</span><span class="o">.</span><span class="n">BICUBIC</span><span class="p">),</span> 
                      <span class="n">transforms</span><span class="o">.</span><span class="n">RandomCrop</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span> 
@@ -455,12 +449,6 @@ const thebe_selector_output = ".output, .cell_output"
                      <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
                      <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">))</span> <span class="p">]</span>
 <span class="n">transforms_test</span> <span class="o">=</span> <span class="p">[</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span><span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">))</span> <span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/isaacflath/opt/miniconda3/lib/python3.9/site-packages/torchvision/transforms/transforms.py:332: UserWarning: Argument interpolation should be of type InterpolationMode instead of int. Please, use InterpolationMode enum.
-  warnings.warn(
 </pre></div>
 </div>
 </div>
@@ -545,8 +533,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#collapse-hide</span>
-<span class="k">class</span> <span class="nc">Discriminator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Discriminator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_nc</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Discriminator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
@@ -627,22 +614,6 @@ const thebe_selector_output = ".output, .cell_output"
                         <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="p">]</span>
             <span class="n">in_features</span> <span class="o">=</span> <span class="n">out_features</span>
             <span class="n">out_features</span> <span class="o">=</span> <span class="n">in_features</span><span class="o">*</span><span class="mi">2</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">Input In [6],</span> in <span class="ni">&lt;cell line: 4&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">out_features</span> <span class="o">=</span> <span class="n">in_features</span><span class="o">*</span><span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
-<span class="ne">----&gt; </span><span class="mi">5</span>     <span class="n">model</span> <span class="o">+=</span> <span class="p">[</span>  <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="n">out_features</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>                 <span class="n">nn</span><span class="o">.</span><span class="n">InstanceNorm2d</span><span class="p">(</span><span class="n">out_features</span><span class="p">),</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>                 <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="p">]</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">in_features</span> <span class="o">=</span> <span class="n">out_features</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">out_features</span> <span class="o">=</span> <span class="n">in_features</span><span class="o">*</span><span class="mi">2</span>
-
-<span class="ne">NameError</span>: name &#39;model&#39; is not defined
 </pre></div>
 </div>
 </div>
