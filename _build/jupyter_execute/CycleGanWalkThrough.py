@@ -104,15 +104,6 @@ class ImageDataset(Dataset):
                 ax[row,col].imshow(0.5*(x+1.)); ax[row,col].axis('off')
 
 
-# Rows 1 and 3 are summer pictures (class A) where rows 2 and 4 are winter pictures (class B)
-
-# In[4]:
-
-
-train_dataloader = DataLoader(ImageDataset('datasets/summer2winter_yosemite', transforms_=transforms_train, unaligned=True),batch_size=1, shuffle=True, num_workers=8)
-train_dataloader.dataset.show_batch()
-
-
 # ## Models
 # 
 # We have discriminators and generators - let's look briefly at what they output, then dive into some details.
@@ -141,7 +132,7 @@ train_dataloader.dataset.show_batch()
 # 
 # >Note: If you think through the impact of batch vs Instance normalization you may realize that with BatchNorm the training for a particular image is effected by which images happen to be in the same batch.  This is because the mean and standard deviation are calculated across the entire batch, rather than for that image alone.
 
-# In[ ]:
+# In[4]:
 
 
 #collapse-hide
@@ -190,7 +181,7 @@ class Discriminator(nn.Module):
 # 
 # The new thing is this ReflectionPad2d.
 
-# In[ ]:
+# In[5]:
 
 
 class Generator(nn.Module):
@@ -216,7 +207,7 @@ class Generator(nn.Module):
 # 
 # We then go through several downsampling layers.  A 3x3 convolution with stride 2 will result in a smaller feature map, which is exactly what we are doing to cause the downsampling.  It's all the usual suspects through: `convolutions`, `InstanceNorms`, and `ReLUs`.
 
-# In[ ]:
+# In[6]:
 
 
 # Downsampling
