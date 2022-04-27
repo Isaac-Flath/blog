@@ -385,33 +385,6 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p>This post is looking at the <a class="reference external" href="https://www.kaggle.com/c/plant-pathology-2020-fgvc7/">plant pathology kaggle competition</a> and showing how you could create a top 10 kaggle submission with fastai.  This is the first of a blog series where I will do this with historical kaggle competitions.  Many techniques will come from the <a class="reference external" href="https://github.com/alipay/cvpr2020-plant-pathology">winning solution code base</a> by the “Alipay Tian Suan Security Lab Kaggle” team, but I will make a modifications as I see fit.  I will explain those as they come up.</p>
 <p>The original code was in pytorch lightning.  I will be using Fastai, which will allow me to simplify the solution considerably without sacrificing results.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedKFold</span>
-
-<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">cv2</span>
-<span class="kn">from</span> <span class="nn">albumentations</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">Compose</span><span class="p">,</span><span class="n">GaussianBlur</span><span class="p">,</span><span class="n">HorizontalFlip</span><span class="p">,</span><span class="n">MedianBlur</span><span class="p">,</span><span class="n">MotionBlur</span><span class="p">,</span><span class="n">OneOf</span><span class="p">,</span>
-    <span class="n">RandomBrightness</span><span class="p">,</span><span class="n">RandomContrast</span><span class="p">,</span><span class="n">Resize</span><span class="p">,</span><span class="n">ShiftScaleRotate</span><span class="p">,</span><span class="n">VerticalFlip</span>
-    <span class="p">)</span>
-<span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;./data/images&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedKFold</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">cv2</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;fastai&#39;
-</pre></div>
-</div>
-</div>
-</div>
 <div class="section" id="transforms">
 <h2>Transforms<a class="headerlink" href="#transforms" title="Permalink to this headline">¶</a></h2>
 <p>First, let’s set up our transforms.  The solution I am using as a starting point used <code class="docutils literal notranslate"><span class="pre">Albumentations</span></code> so I will use that as well and will use their transforms. I grabbed the <code class="docutils literal notranslate"><span class="pre">AlbumentationsTransform</span></code> class from <a class="reference external" href="https://docs.fast.ai/tutorial.albumentations.html">the fastai docs tutorial on albumentations</a>.</p>
