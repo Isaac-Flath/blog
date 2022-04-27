@@ -5,4 +5,6 @@ format: jb-book
 root: intro
 chapters:
 - file: BinarySearch
-  title: Binary Search in Ocaml
+  title: Binary Search (Ocaml-codingame)
+- file: FindClosestNumbers
+  title: Min Difference in List (Ocaml-codingame)
