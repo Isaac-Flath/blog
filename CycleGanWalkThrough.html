@@ -1,0 +1,927 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CycleGAN Walk Through &#8212; Blog</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="GAN Basics" href="GANBasics.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Blog</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Welcome to my blog
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="BinarySearch.html">
+   Binary Search (Ocaml-codingame)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="FindClosestNumbers.html">
+   Min Difference in List (Ocaml-codingame)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="PlantPathologyKaggle.html">
+   Plant Pathology Kaggle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ChatBots.html">
+   Practical Chatbots
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="StyleGanComponents.html">
+   StyleGAN Components
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GANBasics.html">
+   GAN Basics
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   CycleGAN Walk Through
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/CycleGanWalkThrough.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/isaac-flath/blog"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/isaac-flath/blog/issues/new?title=Issue%20on%20page%20%2FCycleGanWalkThrough.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/isaac-flath/blog/master?urlpath=tree/docs/CycleGanWalkThrough.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#transforms">
+   Transforms
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dataset">
+   Dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#models">
+   Models
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#discriminator-key-1">
+     Discriminator - Key 1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generator">
+     Generator
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#initial-layer">
+       Initial Layer
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#downsampling">
+       Downsampling
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#residual-blocks">
+       Residual Blocks
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#upsampling">
+       Upsampling
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#output-layer">
+       Output Layer
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loss-functions">
+   Loss Functions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#discriminator-loss">
+     Discriminator Loss
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generator-loss-key-2">
+     Generator Loss - Key 2
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>CycleGAN Walk Through</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#transforms">
+   Transforms
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dataset">
+   Dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#models">
+   Models
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#discriminator-key-1">
+     Discriminator - Key 1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generator">
+     Generator
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#initial-layer">
+       Initial Layer
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#downsampling">
+       Downsampling
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#residual-blocks">
+       Residual Blocks
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#upsampling">
+       Upsampling
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#output-layer">
+       Output Layer
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loss-functions">
+   Loss Functions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#discriminator-loss">
+     Discriminator Loss
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generator-loss-key-2">
+     Generator Loss - Key 2
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="cyclegan-walk-through">
+<h1>CycleGAN Walk Through<a class="headerlink" href="#cyclegan-walk-through" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>A walkthrough of key components to a pytorch CycleGAN implementation.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>toc: true</p></li>
+<li><p>badges: true</p></li>
+<li><p>comments: true</p></li>
+<li><p>author: Isaac Flath</p></li>
+<li><p>categories: [Computer Vision, GAN]</p></li>
+</ul>
+<p>In this post I will build on my <a class="reference external" href="https://isaac-flath.github.io/fastblog/computer%20vision/gan/2021/02/20/GANBasics.html">previous</a> <a class="reference external" href="https://isaac-flath.github.io/fastblog/computer%20vision/gan/2021/03/01/StyleGanComponents.html">posts</a> on GANs and talk about CycleGAN.</p>
+<p>In StyleGAN, we took noise and generated an image realistic enough to fool the discriminator.  In CycleGAN we take an image and modify it to a different class to make that modified image realistic enough to fool the discriminator into believing it’s that class.</p>
+<p>I am going to walk through a great <a class="reference external" href="https://github.com/aitorzip/PyTorch-CycleGAN">Pytorch CycleGAN implementation</a> and explain what the pieces are doing in plain english so anyone can understand the important bits without diving through lots of code or reading an academic paper.</p>
+<p>Before we jump in - here’s the three most important pieces to CycleGAN to understand if you want to skip to the most crucial bits.  I labeled the key sections in the Table of Contents for you.</p>
+<ol class="simple">
+<li><p>There are 2 generators and 2 discriminators being trained.  4 total models!</p></li>
+<li><p>The Generator Loss function has 3 components: Adverserial Loss, Cycle Loss, and Identity loss.  Understanding these is key.</p></li>
+<li><p>The Discriminator predicts real or fake for lots of different chunks of the image, not just 1 prediction for the whole image.</p></li>
+</ol>
+<p>These will be explained in detail as we go so don’t worry if that doesn’t completely make sense just yet.  It will :)</p>
+<blockquote>
+<div><p>Note: As you read if you like the post and want regular updates when I write new posts, <a class="reference external" href="https://twitter.com/isaac_flath">follow me on twitter</a>.</p>
+</div></blockquote>
+<p>So let’s get started!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide</span>
+<span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">fastcore.basics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
+<span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">Variable</span>
+<span class="kn">from</span> <span class="nn">torchvision.utils</span> <span class="kn">import</span> <span class="n">save_image</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1">#hide</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">fastcore.basics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;fastai&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="transforms">
+<h2>Transforms<a class="headerlink" href="#transforms" title="Permalink to this headline">¶</a></h2>
+<p>This implementation of CycleGAN is using basic transforms that are not unique to CycleGAN so I won’t be diving into detail on those in this post.  Please post a comment or message me on twitter if you have questions or want a post that talks in more detail on transforms.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transforms_train</span> <span class="o">=</span> <span class="p">[</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">256</span><span class="o">*</span><span class="mf">1.12</span><span class="p">),</span> <span class="n">Image</span><span class="o">.</span><span class="n">BICUBIC</span><span class="p">),</span> 
+                     <span class="n">transforms</span><span class="o">.</span><span class="n">RandomCrop</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span> 
+                     <span class="n">transforms</span><span class="o">.</span><span class="n">RandomHorizontalFlip</span><span class="p">(),</span>
+                     <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+                     <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">))</span> <span class="p">]</span>
+<span class="n">transforms_test</span> <span class="o">=</span> <span class="p">[</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span><span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">))</span> <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="dataset">
+<h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
+<p>The dataset isn’t anything special other than a batch being images from both classes (A and B).  This is a standard pytorch dataloader so I won’t cover what’s going on in this post, but there is a <a class="reference external" href="https://pytorch.org/tutorials/beginner/data_loading_tutorial.html">great tutorial</a> if you would like to understand this more.</p>
+<p>There are 2 key things to notice here:</p>
+<ul class="simple">
+<li><p>A batch is a dictionary of images from class A and images from class B.</p></li>
+<li><p>This example would be style transfer between summer and winter pictures (at Yosemite)</p></li>
+</ul>
+<blockquote>
+<div><p>Note: I have added a show_batch method to the dataloader.  This is an idea I took from fastai and it I highly reccomend making sure you have a very easy way to visualize anything you are working with.  It will save you lots of time if you get that set up.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="k">class</span> <span class="nc">ImageDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">transforms_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unaligned</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span><span class="n">transforms_</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unaligned</span> <span class="o">=</span> <span class="n">unaligned</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">files_A</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">A&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/*.*&#39;</span><span class="p">))[:</span><span class="mi">50</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">files_B</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">B&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/*.*&#39;</span><span class="p">))[:</span><span class="mi">50</span><span class="p">]</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">item_A</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files_A</span><span class="p">[</span><span class="n">index</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files_A</span><span class="p">)]))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unaligned</span><span class="p">:</span> <span class="n">item_B</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files_B</span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files_B</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]))</span>
+        <span class="k">else</span><span class="p">:</span>              <span class="n">item_B</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files_B</span><span class="p">[</span><span class="n">index</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files_B</span><span class="p">)]))</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="n">item_A</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="n">item_B</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files_A</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files_B</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="nf">show_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">sets</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">idxs</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()),</span> <span class="n">cols</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">sets</span><span class="p">)</span>        
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sets</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">cols</span><span class="p">,</span><span class="mi">4</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">sets</span><span class="p">))</span>
+        
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sets</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">cols</span><span class="p">):</span>
+                <span class="n">row</span><span class="o">=</span><span class="n">r</span><span class="o">*</span><span class="mi">2</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">row</span> <span class="o">*</span> <span class="n">cols</span> <span class="o">+</span> <span class="n">col</span><span class="p">)</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">idxs</span><span class="p">[</span><span class="n">num</span><span class="p">]][</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">ax</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mf">1.</span><span class="p">));</span> <span class="n">ax</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+                <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">row</span> <span class="o">*</span> <span class="n">cols</span> <span class="o">+</span> <span class="n">col</span><span class="p">)</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">idxs</span><span class="p">[</span><span class="n">num</span><span class="p">]][</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">ax</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mf">1.</span><span class="p">));</span> <span class="n">ax</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Rows 1 and 3 are summer pictures (class A) where rows 2 and 4 are winter pictures (class B)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">ImageDataset</span><span class="p">(</span><span class="s1">&#39;datasets/summer2winter_yosemite&#39;</span><span class="p">,</span> <span class="n">transforms_</span><span class="o">=</span><span class="n">transforms_train</span><span class="p">,</span> <span class="n">unaligned</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">train_dataloader</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">show_batch</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/CycleGanWalkThrough_9_0.png" src="_images/CycleGanWalkThrough_9_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="models">
+<h2>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
+<p>We have discriminators and generators - let’s look briefly at what they output, then dive into some details.</p>
+<ul class="simple">
+<li><p>The discriminator outputs a bunch of predictions as to whether different portions of an image is a real image of that class or a fake image of that class</p></li>
+<li><p>The generator is taking a real image and converting it to the other class.  For example a picture of a lake in the Summer goes in and a picture of that same lake in the winter should come out (maybe adding snow for example).</p></li>
+</ul>
+<blockquote>
+<div><p>Note:  I am assuming you have a general understanding of what the role of a discriminator vs generator is and how they train together.  If you need a refresher <a class="reference external" href="https://isaac-flath.github.io/fastblog/computer%20vision/gan/2021/02/20/GANBasics.html##How-Does-it-Work?">read this</a> section of my GAN Basics blog post</p>
+</div></blockquote>
+<div class="section" id="discriminator-key-1">
+<h3>Discriminator - Key 1<a class="headerlink" href="#discriminator-key-1" title="Permalink to this headline">¶</a></h3>
+<p>The most important thing to understand about any model is what it’s predicting.  Let’s take a look at the last thing that is done before it’s output and understand that first.</p>
+<ul class="simple">
+<li><p><strong>avg_pool2d:</strong> At the end there’s average pooling, which is just calculated averages in different patches of the feature map.  So really what we are predicting is not whether the image is real or fake, but splitting the image into lots of pieces and determining if each piece individually is real or fake.</p></li>
+</ul>
+<p>This gives the generator much more information to be able to optimize to.  Predicting whether an image is real or fake is much easier than generating a whole image - so we want to help the generator as much as possible.</p>
+<p>If you think about this intuitively - it makes perfect sense.  If you were trying to draw a realistic still life and you showed it to an expert artist for feedback what kind of feedback would you like?  Would you like them to tell you it looks real or looks fake and leave it at that?  Or would you get more out of them breaking the painting into pieces, telling you what portions are realistic and what portions need more work?  Of course, the latter is more helpful so that’s what we predict for the generator.</p>
+<p>The rest of the discriminator is nothing special but let’s dive in a bit to prove that.  Here’s the components:</p>
+<ul class="simple">
+<li><p><strong>Conv2d:</strong>  When working with images convolutions are very common</p></li>
+<li><p><strong>LeakyReLU:</strong>  While ReLU is more common, Leaky ReLU is used.  We don’t want the model to get stuck in a ‘no-training’ zone that exists with ReLU.  GANs are harder to train well because of the additional complexity of the adversarial model so LeakyReLU works better on GANs generall.</p></li>
+<li><p><strong>InstanceNorm2d:</strong> BatchNorm is more common, but this is just a small tweak from that.  If you think about the different meanings of the word “Instance” vs “Batch” you make be able to guess what the difference is.  In short BatchNorm is normalizing across the entire batch (computing 1 mean/std).  InstanceNorm is normalizing over the individual image (instance), so you have a mean and std for each image.</p></li>
+</ul>
+<blockquote>
+<div><p>Note: If you think through the impact of batch vs Instance normalization you may realize that with BatchNorm the training for a particular image is effected by which images happen to be in the same batch.  This is because the mean and standard deviation are calculated across the entire batch, rather than for that image alone.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="k">class</span> <span class="nc">Discriminator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_nc</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Discriminator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># A bunch of convolutions one after another</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="p">[</span>   <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">input_nc</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                    <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="p">]</span>
+
+        <span class="n">model</span> <span class="o">+=</span> <span class="p">[</span>  <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                    <span class="n">nn</span><span class="o">.</span><span class="n">InstanceNorm2d</span><span class="p">(</span><span class="mi">128</span><span class="p">),</span> 
+                    <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="p">]</span>
+
+        <span class="n">model</span> <span class="o">+=</span> <span class="p">[</span>  <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                    <span class="n">nn</span><span class="o">.</span><span class="n">InstanceNorm2d</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span> 
+                    <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="p">]</span>
+
+        <span class="n">model</span> <span class="o">+=</span> <span class="p">[</span>  <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                    <span class="n">nn</span><span class="o">.</span><span class="n">InstanceNorm2d</span><span class="p">(</span><span class="mi">512</span><span class="p">),</span> 
+                    <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="p">]</span>
+
+        <span class="c1"># FCN classification layer</span>
+        <span class="n">model</span> <span class="o">+=</span> <span class="p">[</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="c1"># Average pooling and flatten</span>
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">avg_pool2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">2</span><span class="p">:])</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="generator">
+<h3>Generator<a class="headerlink" href="#generator" title="Permalink to this headline">¶</a></h3>
+<p>The Generator is what generates the image.  It’s got a lot of the same components as other Neural Networks.  Let’s talk about the components.</p>
+<p>Let’s break this apart and talk about each piece briefly.</p>
+<div class="section" id="initial-layer">
+<h4>Initial Layer<a class="headerlink" href="#initial-layer" title="Permalink to this headline">¶</a></h4>
+<p>So this is the code from the implementiation for the first bit of the generator (I cut off the rest to be shown later).  Let’s understand this first.</p>
+<p>We see all the same components we say avove.  <code class="docutils literal notranslate"><span class="pre">Conv2d</span></code> is doing convolutions (big 7x7 ones), we also have InstanceNorm like we saw in the Discriminator (discussed above), and a common activation function <code class="docutils literal notranslate"><span class="pre">ReLU</span></code>.</p>
+<p>The new thing is this ReflectionPad2d.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Generator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_nc</span><span class="p">,</span> <span class="n">output_nc</span><span class="p">,</span> <span class="n">n_residual_blocks</span><span class="o">=</span><span class="mi">9</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Generator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># Initial convolution block       </span>
+        <span class="n">model</span> <span class="o">=</span> <span class="p">[</span>   <span class="n">nn</span><span class="o">.</span><span class="n">ReflectionPad2d</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+                    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">input_nc</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
+                    <span class="n">nn</span><span class="o">.</span><span class="n">InstanceNorm2d</span><span class="p">(</span><span class="mi">64</span><span class="p">),</span>
+                    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>So what is ReflectionPad2d?  First, let’s look at what a convolution does.  The blue in the gif below is the image, the white squares are padding.  Normally they’re padded with nothing like in the illustration.  What ReflectionPad does is pads that with a reflection of the image instead.  In other words, we are using the pixels values of pixels on the edge to pad instead of just a pure white or pure black pixel.</p>
+<blockquote>
+<div><p>Note: Fore more on convolutions <a class="reference external" href="https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53">go here</a>.  The gif below comes from that guide by <a class="reference external" href="https://medium.com/&#64;_sumitsaha_">Sumit Saha</a> and the guide contains a lot of other create information.</p>
+</div></blockquote>
+<p><img alt="" src="https://miro.medium.com/max/395/1*1VJDP6qDY9-ExTuQVEOlVg.gif" /></p>
+<blockquote>
+<div><p>Note: Credit for Visualization: Vincent Dumoulin, Francesco Visin - <a class="reference external" href="https://arxiv.org/abs/1603.07285">A guide to convolution arithmetic for deep learning</a></p>
+</div></blockquote>
+</div>
+<div class="section" id="downsampling">
+<h4>Downsampling<a class="headerlink" href="#downsampling" title="Permalink to this headline">¶</a></h4>
+<p>We then go through several downsampling layers.  A 3x3 convolution with stride 2 will result in a smaller feature map, which is exactly what we are doing to cause the downsampling.  It’s all the usual suspects through: <code class="docutils literal notranslate"><span class="pre">convolutions</span></code>, <code class="docutils literal notranslate"><span class="pre">InstanceNorms</span></code>, and <code class="docutils literal notranslate"><span class="pre">ReLUs</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>        <span class="c1"># Downsampling</span>
+        <span class="n">in_features</span> <span class="o">=</span> <span class="mi">64</span>
+        <span class="n">out_features</span> <span class="o">=</span> <span class="n">in_features</span><span class="o">*</span><span class="mi">2</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">+=</span> <span class="p">[</span>  <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="n">out_features</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                        <span class="n">nn</span><span class="o">.</span><span class="n">InstanceNorm2d</span><span class="p">(</span><span class="n">out_features</span><span class="p">),</span>
+                        <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="p">]</span>
+            <span class="n">in_features</span> <span class="o">=</span> <span class="n">out_features</span>
+            <span class="n">out_features</span> <span class="o">=</span> <span class="n">in_features</span><span class="o">*</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="residual-blocks">
+<h4>Residual Blocks<a class="headerlink" href="#residual-blocks" title="Permalink to this headline">¶</a></h4>
+<p>Next we go through some residual blocks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>        <span class="c1"># Residual blocks</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_residual_blocks</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">+=</span> <span class="p">[</span><span class="n">ResidualBlock</span><span class="p">(</span><span class="n">in_features</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>When we look at residual blocks again, it’s all the same components in slightly different configurations as above.  We have <code class="docutils literal notranslate"><span class="pre">ReflectionPad</span></code>, <code class="docutils literal notranslate"><span class="pre">Convolutions</span></code>, <code class="docutils literal notranslate"><span class="pre">InstanceNorm</span></code>, and <code class="docutils literal notranslate"><span class="pre">ReLUs</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ResidualBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_features</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ResidualBlock</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="n">conv_block</span> <span class="o">=</span> <span class="p">[</span>  <span class="n">nn</span><span class="o">.</span><span class="n">ReflectionPad2d</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+                        <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="n">in_features</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+                        <span class="n">nn</span><span class="o">.</span><span class="n">InstanceNorm2d</span><span class="p">(</span><span class="n">in_features</span><span class="p">),</span>
+                        <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                        <span class="n">nn</span><span class="o">.</span><span class="n">ReflectionPad2d</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+                        <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="n">in_features</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+                        <span class="n">nn</span><span class="o">.</span><span class="n">InstanceNorm2d</span><span class="p">(</span><span class="n">in_features</span><span class="p">)</span>  <span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv_block</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">conv_block</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv_block</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="upsampling">
+<h4>Upsampling<a class="headerlink" href="#upsampling" title="Permalink to this headline">¶</a></h4>
+<p>Next is upsampling.  There is a new component here which <code class="docutils literal notranslate"><span class="pre">ConvTranspose</span></code>.  Let’s take a look at what that is exactly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>        <span class="n">out_features</span> <span class="o">=</span> <span class="n">in_features</span><span class="o">//</span><span class="mi">2</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">+=</span> <span class="p">[</span>  <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="n">out_features</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">output_padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                        <span class="n">nn</span><span class="o">.</span><span class="n">InstanceNorm2d</span><span class="p">(</span><span class="n">out_features</span><span class="p">),</span>
+                        <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="p">]</span>
+            <span class="n">in_features</span> <span class="o">=</span> <span class="n">out_features</span>
+            <span class="n">out_features</span> <span class="o">=</span> <span class="n">in_features</span><span class="o">//</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>So what is this?  Well essentially it’s a normal convolution that upsamples by creating padding between cells.  Here’s a visual that shows what that looks like.</p>
+<p><img alt="" src="https://i.stack.imgur.com/f2RiP.gif" /></p>
+<blockquote>
+<div><p>Note: Credit for Visualization: Vincent Dumoulin, Francesco Visin - <a class="reference external" href="https://arxiv.org/abs/1603.07285">A guide to convolution arithmetic for deep learning</a></p>
+</div></blockquote>
+</div>
+<div class="section" id="output-layer">
+<h4>Output Layer<a class="headerlink" href="#output-layer" title="Permalink to this headline">¶</a></h4>
+<p>Finally we have out output layer with a <code class="docutils literal notranslate"><span class="pre">Tanh</span></code> activation function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>        <span class="n">model</span> <span class="o">+=</span> <span class="p">[</span>  <span class="n">nn</span><span class="o">.</span><span class="n">ReflectionPad2d</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+                    <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">output_nc</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
+                    <span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">()</span> <span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="loss-functions">
+<h2>Loss Functions<a class="headerlink" href="#loss-functions" title="Permalink to this headline">¶</a></h2>
+<p>The model using the Adam Optimizer with a scheduler.  I am going to skip over that and look at the most interesting and important part of CycleGAN.  The loss functions!</p>
+<p>If you recall, we have both generators and Discriminators.  So we need a loss function for each.  Let’s look at each.</p>
+<div class="section" id="discriminator-loss">
+<h3>Discriminator Loss<a class="headerlink" href="#discriminator-loss" title="Permalink to this headline">¶</a></h3>
+<p>The discriminator loss is a standard adversarial loss.  Let’s think through what we would need:</p>
+<ul class="simple">
+<li><p>Real images of a class (ie Summer Yosimite pictures)</p></li>
+<li><p>Fake images of a class (ie generated Summer Yosimite pictures)</p></li>
+<li><p>Discriminator predictions for whether each section of the image is real or fake</p></li>
+</ul>
+<p>So let’s say we generated the images with our generator and then we took the real images from our batch, the fake generated images, and ran that through our disciminator.  Once we have that we use Mean Squared Error as the loss function.</p>
+<p>Let’s see how this works.  Everything is duplicated because we have 2 discriminators.</p>
+<p><strong>Discriminator 1:</strong> Is each section of this Class A image real or fake?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>        <span class="n">pred_real</span> <span class="o">=</span> <span class="n">netD_A</span><span class="p">(</span><span class="n">real_A</span><span class="p">)</span> <span class="c1"># Predict whether real image is real or fake</span>
+        <span class="n">loss_D_real</span> <span class="o">=</span> <span class="n">criterion_GAN</span><span class="p">(</span><span class="n">pred_real</span><span class="p">,</span> <span class="n">target_real</span><span class="p">)</span> 
+
+        <span class="n">pred_fake</span> <span class="o">=</span> <span class="n">netD_A</span><span class="p">(</span><span class="n">fake_A</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span> <span class="c1"># Predict whether fake image is real or fake</span>
+        <span class="n">loss_D_fake</span> <span class="o">=</span> <span class="n">criterion_GAN</span><span class="p">(</span><span class="n">pred_fake</span><span class="p">,</span> <span class="n">target_fake</span><span class="p">)</span>
+
+        <span class="n">loss_D_A</span> <span class="o">=</span> <span class="p">(</span><span class="n">loss_D_real</span> <span class="o">+</span> <span class="n">loss_D_fake</span><span class="p">)</span><span class="o">*</span><span class="mf">0.5</span> <span class="c1"># Total loss</span>
+        <span class="n">loss_D_A</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span> <span class="c1"># backward pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Discriminator 2:</strong> Is each section of this Class B image real or fake?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>        <span class="n">pred_real</span> <span class="o">=</span> <span class="n">netD_B</span><span class="p">(</span><span class="n">real_B</span><span class="p">)</span> <span class="c1"># Predict whether real image is real or fake</span>
+        <span class="n">loss_D_real</span> <span class="o">=</span> <span class="n">criterion_GAN</span><span class="p">(</span><span class="n">pred_real</span><span class="p">,</span> <span class="n">target_real</span><span class="p">)</span> 
+
+        <span class="n">pred_fake</span> <span class="o">=</span> <span class="n">netD_B</span><span class="p">(</span><span class="n">fake_B</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span> <span class="c1"># Predict whether fake image is real or fake</span>
+        <span class="n">loss_D_fake</span> <span class="o">=</span> <span class="n">criterion_GAN</span><span class="p">(</span><span class="n">pred_fake</span><span class="p">,</span> <span class="n">target_fake</span><span class="p">)</span> 
+
+        <span class="n">loss_D_B</span> <span class="o">=</span> <span class="p">(</span><span class="n">loss_D_real</span> <span class="o">+</span> <span class="n">loss_D_fake</span><span class="p">)</span><span class="o">*</span><span class="mf">0.5</span> <span class="c1"># Total loss</span>
+        <span class="n">loss_D_B</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span> <span class="c1"># backward pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="generator-loss-key-2">
+<h3>Generator Loss - Key 2<a class="headerlink" href="#generator-loss-key-2" title="Permalink to this headline">¶</a></h3>
+<p>The generator loss is the key to CycleGAN and it has three main parts to it.</p>
+<ol class="simple">
+<li><p>Adverserial Loss:  This is standard MSE Loss.  This is the most straightforward loss.</p></li>
+<li><p>Identity Loss: This is L1Loss (pixel by pixel comparison to minimize the difference in pixel values).  If my generator is trained to take a Summer picture and turn it into a Winter picture and I give it winter picture is should do nothing (identity function).  The generator should look at the Winter Picture and determin that nothing needs to be done to make it a Winter picture as that’s what it already is.  Identity loss is just trying this out and then comparing the input image with the output image.</p></li>
+<li><p>Cycle Loss:  This is where cycleGAN gets it’s name.  L1 loss is just trying to minimize the difference in pixel values.  But how does it have images to compare when it’s an unpaired dataset?</p>
+<ul class="simple">
+<li><p>Start with class A and run your Generator to create class B out of the Class A image</p></li>
+<li><p>Take that class B image that was just generated, and run it through the other generator to create a class A image</p></li>
+<li><p>If all you are doing is transferring styles you should get the exact same image back after the full cycle.  Those are the 2 images being compared.</p></li>
+</ul>
+</li>
+</ol>
+<p>These three components get added up for the loss function.  You can add weights to different portions to prioritize different aspects of the loss function.</p>
+<p>So how does this look all together?  You may notice everything is duplicated in the code.  That’s because We have 2 generators:</p>
+<ul class="simple">
+<li><p>Class A -&gt; Class B or Summer -&gt; Winter</p></li>
+<li><p>Class B -&gt; Class A or Winter -&gt; Summer</p></li>
+</ul>
+<p><strong>Adverserial Loss:</strong> Is it good enough to fool the discriminator?</p>
+<p>This is the most straightforward and is standard MSE loss.  The generator is optimizing to fool the Discriminator.  Specifically the loss is being calculated on the disciminators prediction on fake images and a ‘truth label’ saying it is a real image.  We know it’s not actually a real image, but the discriminator wants us to think so.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>        <span class="n">fake_B</span> <span class="o">=</span> <span class="n">netG_A2B</span><span class="p">(</span><span class="n">real_A</span><span class="p">)</span> <span class="c1"># Generate class B from class A</span>
+        <span class="n">pred_fake</span> <span class="o">=</span> <span class="n">netD_B</span><span class="p">(</span><span class="n">fake_B</span><span class="p">)</span> <span class="c1"># Discriminator predict is is real or fake</span>
+        <span class="n">loss_GAN_A2B</span> <span class="o">=</span> <span class="n">criterion_GAN</span><span class="p">(</span><span class="n">pred_fake</span><span class="p">,</span> <span class="n">target_real</span><span class="p">)</span> <span class="c1"># Is discriminator fooled?</span>
+
+        <span class="n">fake_A</span> <span class="o">=</span> <span class="n">netG_B2A</span><span class="p">(</span><span class="n">real_B</span><span class="p">)</span> <span class="c1"># Generate class A from class B</span>
+        <span class="n">pred_fake</span> <span class="o">=</span> <span class="n">netD_A</span><span class="p">(</span><span class="n">fake_A</span><span class="p">)</span> <span class="c1"># Discriminator predict is is real or fake</span>
+        <span class="n">loss_GAN_B2A</span> <span class="o">=</span> <span class="n">criterion_GAN</span><span class="p">(</span><span class="n">pred_fake</span><span class="p">,</span> <span class="n">target_real</span><span class="p">)</span> <span class="c1"># Is discriminator fooled?</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Identity Loss:</strong> Is it making the minimum changes needed?</p>
+<p>Identity loss is L1 loss (pixel by pixel comparison to minimize the difference in pixel values).  If my generator is trained to take a Summer picture and turn it into a Winter picture and I give it winter picture, it should do nothing (identity function).  The generator should look at the Winter Picture and determin that nothing needs to be done to make it a Winter picture as that’s what it already is.  Identity loss is doing this exactly and comparing the input image with the output image.  Since it should change nothing we can calculate the loss as the difference between the pixels.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>        <span class="n">same_B</span> <span class="o">=</span> <span class="n">netG_A2B</span><span class="p">(</span><span class="n">real_B</span><span class="p">)</span> <span class="c1"># Generate class B from class B</span>
+        <span class="n">loss_identity_B</span> <span class="o">=</span> <span class="n">criterion_identity</span><span class="p">(</span><span class="n">same_B</span><span class="p">,</span> <span class="n">real_B</span><span class="p">)</span><span class="o">*</span><span class="mf">5.0</span> <span class="c1"># Pixel Diff</span>
+
+        <span class="n">same_A</span> <span class="o">=</span> <span class="n">netG_B2A</span><span class="p">(</span><span class="n">real_A</span><span class="p">)</span> <span class="c1"># Generate class A from class A</span>
+        <span class="n">loss_identity_A</span> <span class="o">=</span> <span class="n">criterion_identity</span><span class="p">(</span><span class="n">same_A</span><span class="p">,</span> <span class="n">real_A</span><span class="p">)</span><span class="o">*</span><span class="mf">5.0</span> <span class="c1"># Pixel Diff</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Cycle loss:</strong> Is it only changing style?</p>
+<p>This is where cycleGAN gets it’s name.  Cycle Loss is also an L1 Loss function - let’s take a look at what images it’s comparing.  Here’s the process:
++ Start with a class A image and run your Generator to generate a class B image
++ Take that generated class B image and run it through the other generator to create a class A image (full cycle)
++ Compare pixels between that generated Class A image should be identical to the original Class A input image
++ Repeat in the other direction</p>
+<p>If the only thing being changed is style then the generated Class A image that went through the full cycle should be identical to the original input Class A image.  If however other things are getting changed, then you will have information loss and you the images will be different.  By minizing this pixel difference you are telling the model not to change the general content of the image, it can only change stylistic things.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>        <span class="n">recovered_A</span> <span class="o">=</span> <span class="n">netG_B2A</span><span class="p">(</span><span class="n">fake_B</span><span class="p">)</span> <span class="c1"># Generate Class A from fake Class B</span>
+        <span class="n">loss_cycle_ABA</span> <span class="o">=</span> <span class="n">criterion_cycle</span><span class="p">(</span><span class="n">recovered_A</span><span class="p">,</span> <span class="n">real_A</span><span class="p">)</span><span class="o">*</span><span class="mf">10.0</span> <span class="c1"># Pixel Diff</span>
+
+        <span class="n">recovered_B</span> <span class="o">=</span> <span class="n">netG_A2B</span><span class="p">(</span><span class="n">fake_A</span><span class="p">)</span> <span class="c1"># Generate Class B from fake Class A</span>
+        <span class="n">loss_cycle_BAB</span> <span class="o">=</span> <span class="n">criterion_cycle</span><span class="p">(</span><span class="n">recovered_B</span><span class="p">,</span> <span class="n">real_B</span><span class="p">)</span><span class="o">*</span><span class="mf">10.0</span> <span class="c1"># Pixel Diff</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Total Generator Loss:</strong> Sum them all up into 1 loss function</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>        <span class="c1"># Total loss</span>
+        <span class="n">loss_G</span> <span class="o">=</span> <span class="n">loss_identity_A</span> <span class="o">+</span> <span class="n">loss_identity_B</span> <span class="o">+</span> <span class="n">loss_GAN_A2B</span> <span class="o">+</span> <span class="n">loss_GAN_B2A</span> <span class="o">+</span> <span class="n">loss_cycle_ABA</span> <span class="o">+</span> <span class="n">loss_cycle_BAB</span> <span class="c1"># Add all these losses up</span>
+        <span class="n">loss_G</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span> <span class="c1"># backward pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>That’s really the guts of it. You throw that with an optimizer and scheduler in a training loop and you are pretty close to done!  Check out the repository linked at the start of the repository for the full implementation with all the details.</p>
+<p>If you want regular updates when I write new posts, <a class="reference external" href="https://twitter.com/isaac_flath">follow me on twitter</a>.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="GANBasics.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">GAN Basics</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Isaac Flath<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

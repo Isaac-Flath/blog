@@ -1,0 +1,597 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GAN Basics &#8212; Blog</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CycleGAN Walk Through" href="CycleGanWalkThrough.html" />
+    <link rel="prev" title="StyleGAN Components" href="StyleGanComponents.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Blog</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Welcome to my blog
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="BinarySearch.html">
+   Binary Search (Ocaml-codingame)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="FindClosestNumbers.html">
+   Min Difference in List (Ocaml-codingame)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="PlantPathologyKaggle.html">
+   Plant Pathology Kaggle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ChatBots.html">
+   Practical Chatbots
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="StyleGanComponents.html">
+   StyleGAN Components
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   GAN Basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="CycleGanWalkThrough.html">
+   CycleGAN Walk Through
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/GANBasics.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/isaac-flath/blog"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/isaac-flath/blog/issues/new?title=Issue%20on%20page%20%2FGANBasics.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/isaac-flath/blog/master?urlpath=tree/docs/GANBasics.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#purpose">
+   Purpose
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-a-gan-and-what-can-it-do">
+   What is a GAN and what can it do?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-gan-can-enhance-images">
+     A GAN can enhance images
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-gan-can-change-image-style">
+     A GAN can change image style
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-gan-can-create-new-images">
+     A GAN can create new images
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-gan-can-help-you-draw">
+     A GAN can help you draw
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-gan-can-compose-music">
+     A GAN can compose music
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-does-it-work">
+   How Does it Work?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-they-train-together">
+     How they train together
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#first-challenges">
+   First Challenges
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#co-learning">
+     Co-learning
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mode-collapse">
+     Mode Collapse
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#improvements-tweaks">
+   Improvements &amp; Tweaks
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conditional-gans">
+     Conditional GANs
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#controllable-gans">
+     Controllable GANs
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>GAN Basics</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#purpose">
+   Purpose
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-a-gan-and-what-can-it-do">
+   What is a GAN and what can it do?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-gan-can-enhance-images">
+     A GAN can enhance images
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-gan-can-change-image-style">
+     A GAN can change image style
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-gan-can-create-new-images">
+     A GAN can create new images
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-gan-can-help-you-draw">
+     A GAN can help you draw
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-gan-can-compose-music">
+     A GAN can compose music
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-does-it-work">
+   How Does it Work?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-they-train-together">
+     How they train together
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#first-challenges">
+   First Challenges
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#co-learning">
+     Co-learning
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mode-collapse">
+     Mode Collapse
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#improvements-tweaks">
+   Improvements &amp; Tweaks
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conditional-gans">
+     Conditional GANs
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#controllable-gans">
+     Controllable GANs
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="gan-basics">
+<h1>GAN Basics<a class="headerlink" href="#gan-basics" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>Summarizing the foundational concepts relating to GANs</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>toc: true</p></li>
+<li><p>badges: true</p></li>
+<li><p>comments: true</p></li>
+<li><p>author: Isaac Flath</p></li>
+<li><p>categories: [Computer Vision, GAN]</p></li>
+</ul>
+<div class="section" id="purpose">
+<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
+<p>This blog is tagetted to people wanting a general intuition about GANs.  This is not going to cover how to code one or build one, but will talk about the most basic high level concepts to understand.</p>
+<p>You do not need to understand GANs prior to reading this post.  I do assume that you generally are familiar with modeling.</p>
+</div>
+<div class="section" id="what-is-a-gan-and-what-can-it-do">
+<h2>What is a GAN and what can it do?<a class="headerlink" href="#what-is-a-gan-and-what-can-it-do" title="Permalink to this headline">¶</a></h2>
+<p>A GAN is a Generative Adverserial Network.  They excel in creating data.  Let’s take a look at a few examples:</p>
+<div class="section" id="a-gan-can-enhance-images">
+<h3>A GAN can enhance images<a class="headerlink" href="#a-gan-can-enhance-images" title="Permalink to this headline">¶</a></h3>
+<p>Google Brain did research to show how GANs can be used to enhance images.  The left super blurry unrecognizable pictures were given to a GAN.  The Middle column is what the GAN made when enhancing the image.  The right column is what the image should look like if the GAN was perfect.</p>
+<p><img alt="Image Enhancement" src="my_icons/SuperEnhancement.jpg" /></p>
+</div>
+<div class="section" id="a-gan-can-change-image-style">
+<h3>A GAN can change image style<a class="headerlink" href="#a-gan-can-change-image-style" title="Permalink to this headline">¶</a></h3>
+<p>We can also transfer images from one style to another.  Whether that’s changing video of a horse to a zerbra or combining photos with art, <a class="reference external" href="https://medium.com/&#64;purnasaigudikandula/artistic-neural-style-transfer-with-pytorch-1543e08cc38f">this medium aricle</a> shows a cool example!</p>
+<p><img alt="Dog Style Transfer" src="my_icons/DogStyleTransfer.jpeg" /></p>
+</div>
+<div class="section" id="a-gan-can-create-new-images">
+<h3>A GAN can create new images<a class="headerlink" href="#a-gan-can-create-new-images" title="Permalink to this headline">¶</a></h3>
+<p>In the paper <a class="reference external" href="https://arxiv.org/pdf/1710.10196.pdf">Progressive Growing of GANs for Improved Quality, Stability, and Variation</a>, NVIDIA showed the capability of GANs to create realistic super resolution photos of people that do not exist.  These are fictional people made up by the GAN.</p>
+<p><img alt="Super Resolution Images" src="my_icons/SuperResolution.png" /></p>
+</div>
+<div class="section" id="a-gan-can-help-you-draw">
+<h3>A GAN can help you draw<a class="headerlink" href="#a-gan-can-help-you-draw" title="Permalink to this headline">¶</a></h3>
+<p>NVIDIA again shows a really cool video of how basic sketches cna be turned into realistic photos.  I can imagine how this could help people create art, visualize designs, and more!</p>
+<blockquote>
+<div><p>youtube: <a class="reference external" href="https://www.youtube.com/embed/p5U4NgVGAwg">https://www.youtube.com/embed/p5U4NgVGAwg</a></p>
+</div></blockquote>
+</div>
+<div class="section" id="a-gan-can-compose-music">
+<h3>A GAN can compose music<a class="headerlink" href="#a-gan-can-compose-music" title="Permalink to this headline">¶</a></h3>
+<p>Another example is this song that was composed by AI.  The lyrics is a person, but the instrumentation is AI - a great example of Machine-Human collaboration.  You can see the GAN understood basic musical phrasing, hits, understood it can build to hits and go quiet for a couple beats before a large hit to add impact.  If I didn’t know, I wouldn’t have realized is was using AI</p>
+<blockquote>
+<div><p>youtube: <a class="reference external" href="https://www.youtube.com/embed/XUs6CznN8pw">https://www.youtube.com/embed/XUs6CznN8pw</a></p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="how-does-it-work">
+<h2>How Does it Work?<a class="headerlink" href="#how-does-it-work" title="Permalink to this headline">¶</a></h2>
+<p>This is more complex than your average Neural Network because it is relying on 2 (or more) Neural Networks training in conjunction.  You have 2 models with different roles:</p>
+<p>The Critic is the quality gauge on the Generator while the generator is what’s actually producing the data.  Let’s look at a summary of each of those.</p>
+<p><img alt="Critic Generator Summary" src="my_icons/CriticGenerator.png" /></p>
+<div class="section" id="how-they-train-together">
+<h3>How they train together<a class="headerlink" href="#how-they-train-together" title="Permalink to this headline">¶</a></h3>
+<p>There is a big loop where they pass information back and forth an dlearn.  Here’s generally how it works</p>
+<p><img alt="GAN Training Loop" src="my_icons/GANTrainingLoop.png" /></p>
+</div>
+</div>
+<div class="section" id="first-challenges">
+<h2>First Challenges<a class="headerlink" href="#first-challenges" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="co-learning">
+<h3>Co-learning<a class="headerlink" href="#co-learning" title="Permalink to this headline">¶</a></h3>
+<p>As these models learn together they need to be evenly match in terms of skill.  This can be especially challenging because the critic has a much easier job.  Think about it.  You paint a fake Monet and I will determine whether it’s a real monet or a fake.  Who do you think will be more competent at their task?  Clearly painting the monet is the much harder job.</p>
+<p>So what can we do about it?  The siimplest 2 appraoches are:</p>
+<ol class="simple">
+<li><p>Set how many times the generator gets updated vs the critic.</p></li>
+<li><p>Set the learning rates different for the generator vs the critic</p></li>
+</ol>
+</div>
+<div class="section" id="mode-collapse">
+<h3>Mode Collapse<a class="headerlink" href="#mode-collapse" title="Permalink to this headline">¶</a></h3>
+<p>Mode collapse happens when the generator finds a weakness in the crtic and exploits it.  For example, the generator might do really well with golden retrievers - so rather than making all types of dogs is just learns to make lots of golden retrievors.</p>
+</div>
+</div>
+<div class="section" id="improvements-tweaks">
+<h2>Improvements &amp; Tweaks<a class="headerlink" href="#improvements-tweaks" title="Permalink to this headline">¶</a></h2>
+<p>What I have covered above is simple data generation in an unsupervised manner.  There’s several modification that can be made to let these GANs do fancier things - and Ill briefly touch on two of those here.</p>
+<div class="section" id="conditional-gans">
+<h3>Conditional GANs<a class="headerlink" href="#conditional-gans" title="Permalink to this headline">¶</a></h3>
+<p>A conditional GAN is where you can tell it what kind of image you want.  For example if you are generating different dog breeds, you tell the gan you want a specific breed (ie Golden Retriever).  The way this works:</p>
+<ol class="simple">
+<li><p>The Generator is given a specific class to generate data for.</p></li>
+<li><p>The Critic determins whether is is real or fake data for that class.  For example rather than “Predict if this is a real dog or not” it’s “Predict if this is a real golden retriever or not”.  In order to fool the critic, the generator now has to not just create a dog - but the right species of dog.  The generator could predict a perfect image of a pitbull, but it woul dbe easy for the critic to determine that it’s a not a real golden retriever as pitbulls look completely different!</p></li>
+</ol>
+</div>
+<div class="section" id="controllable-gans">
+<h3>Controllable GANs<a class="headerlink" href="#controllable-gans" title="Permalink to this headline">¶</a></h3>
+<p>A Controllable GAN allows you to control different aspects of the image.  For example, I want to be able to take an image and tell it to generate the same image but add a beard.  Or generate the same image but make the person look older.</p>
+<p>A bit of background and how it’s accomplished:  A generator creates data from random noise vectors.  These random noise vectors can be thought of as random seeds in a sense.  If I give the generator the exact same vector of random numbers, it will generate the exact same data.  So those random number translate to output features in the data, so you can figure out how they map and then tweak away!</p>
+<p>Now, there’s a lot of execution details and challenges to making this happen that I am not covering in this post, but feel free to reach out if you’re interested and I can do a follow up post on the details on how to actually accomplish this.</p>
+<p>Here’s an example of what Photoshop is working on when it comes to controllable GANs.</p>
+<blockquote>
+<div><p>youtube: <a class="reference external" href="https://www.youtube.com/embed/iJs_nqu8P08">https://www.youtube.com/embed/iJs_nqu8P08</a></p>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="StyleGanComponents.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">StyleGAN Components</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="CycleGanWalkThrough.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">CycleGAN Walk Through</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Isaac Flath<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
