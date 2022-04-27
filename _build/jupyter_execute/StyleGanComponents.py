@@ -4,11 +4,8 @@
 # # StyleGAN Components
 # > Showing the key components to StyleGAN and how they work
 # 
-# - toc: true
-# - badges: true
-# - comments: true
-# - author: Isaac Flath
-# - categories: [Computer Vision, GAN]
+# Author: Isaac Flath
+# 
 
 # ## Intro
 
@@ -36,7 +33,6 @@
 # In[1]:
 
 
-#hide_input
 import scipy.stats as stats
 import matplotlib.pyplot as plt
 import numpy as np
@@ -58,7 +54,6 @@ plt.show()
 # In[2]:
 
 
-#hide
 from scipy.stats import truncnorm
 
 def get_truncated_noise(n_samples, z_dim, truncation):
@@ -213,7 +208,6 @@ class MinifiedStyleGANGeneratorBlock(nn.Module):
 # In[7]:
 
 
-#hide
 class AdaIN(nn.Module):
     def __init__(self, channels, w_dim):
         super().__init__()
@@ -240,7 +234,7 @@ class InjectNoise(nn.Module):
         return out
 
 
-# In[8]:
+# In[9]:
 
 
 class MinifiedStyleGANGenerator(nn.Module):

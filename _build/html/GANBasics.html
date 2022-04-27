@@ -438,13 +438,7 @@ const thebe_selector_output = ".output, .cell_output"
 <blockquote>
 <div><p>Summarizing the foundational concepts relating to GANs</p>
 </div></blockquote>
-<ul class="simple">
-<li><p>toc: true</p></li>
-<li><p>badges: true</p></li>
-<li><p>comments: true</p></li>
-<li><p>author: Isaac Flath</p></li>
-<li><p>categories: [Computer Vision, GAN]</p></li>
-</ul>
+<p>Author: Isaac Flath</p>
 <div class="section" id="purpose">
 <h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
 <p>This blog is tagetted to people wanting a general intuition about GANs.  This is not going to cover how to code one or build one, but will talk about the most basic high level concepts to understand.</p>
@@ -456,42 +450,62 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="a-gan-can-enhance-images">
 <h3>A GAN can enhance images<a class="headerlink" href="#a-gan-can-enhance-images" title="Permalink to this headline">¶</a></h3>
 <p>Google Brain did research to show how GANs can be used to enhance images.  The left super blurry unrecognizable pictures were given to a GAN.  The Middle column is what the GAN made when enhancing the image.  The right column is what the image should look like if the GAN was perfect.</p>
-<p><img alt="Image Enhancement" src="my_icons/SuperEnhancement.jpg" /></p>
+<p><img alt="Image Enhancement" src="_images/SuperEnhancement.jpg" /></p>
 </div>
 <div class="section" id="a-gan-can-change-image-style">
 <h3>A GAN can change image style<a class="headerlink" href="#a-gan-can-change-image-style" title="Permalink to this headline">¶</a></h3>
 <p>We can also transfer images from one style to another.  Whether that’s changing video of a horse to a zerbra or combining photos with art, <a class="reference external" href="https://medium.com/&#64;purnasaigudikandula/artistic-neural-style-transfer-with-pytorch-1543e08cc38f">this medium aricle</a> shows a cool example!</p>
-<p><img alt="Dog Style Transfer" src="my_icons/DogStyleTransfer.jpeg" /></p>
+<p><img alt="Dog Style Transfer" src="_images/DogStyleTransfer.jpeg" /></p>
 </div>
 <div class="section" id="a-gan-can-create-new-images">
 <h3>A GAN can create new images<a class="headerlink" href="#a-gan-can-create-new-images" title="Permalink to this headline">¶</a></h3>
 <p>In the paper <a class="reference external" href="https://arxiv.org/pdf/1710.10196.pdf">Progressive Growing of GANs for Improved Quality, Stability, and Variation</a>, NVIDIA showed the capability of GANs to create realistic super resolution photos of people that do not exist.  These are fictional people made up by the GAN.</p>
-<p><img alt="Super Resolution Images" src="my_icons/SuperResolution.png" /></p>
+<p><img alt="Super Resolution Images" src="_images/SuperResolution.png" /></p>
 </div>
 <div class="section" id="a-gan-can-help-you-draw">
 <h3>A GAN can help you draw<a class="headerlink" href="#a-gan-can-help-you-draw" title="Permalink to this headline">¶</a></h3>
 <p>NVIDIA again shows a really cool video of how basic sketches cna be turned into realistic photos.  I can imagine how this could help people create art, visualize designs, and more!</p>
-<blockquote>
-<div><p>youtube: <a class="reference external" href="https://www.youtube.com/embed/p5U4NgVGAwg">https://www.youtube.com/embed/p5U4NgVGAwg</a></p>
-</div></blockquote>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="800"
+    height="400"
+    src="https://www.youtube.com/embed/p5U4NgVGAwg"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+</div></div>
+</div>
 </div>
 <div class="section" id="a-gan-can-compose-music">
 <h3>A GAN can compose music<a class="headerlink" href="#a-gan-can-compose-music" title="Permalink to this headline">¶</a></h3>
 <p>Another example is this song that was composed by AI.  The lyrics is a person, but the instrumentation is AI - a great example of Machine-Human collaboration.  You can see the GAN understood basic musical phrasing, hits, understood it can build to hits and go quiet for a couple beats before a large hit to add impact.  If I didn’t know, I wouldn’t have realized is was using AI</p>
-<blockquote>
-<div><p>youtube: <a class="reference external" href="https://www.youtube.com/embed/XUs6CznN8pw">https://www.youtube.com/embed/XUs6CznN8pw</a></p>
-</div></blockquote>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="800"
+    height="400"
+    src="https://www.youtube.com/embed/XUs6CznN8pw"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+</div></div>
+</div>
 </div>
 </div>
 <div class="section" id="how-does-it-work">
 <h2>How Does it Work?<a class="headerlink" href="#how-does-it-work" title="Permalink to this headline">¶</a></h2>
 <p>This is more complex than your average Neural Network because it is relying on 2 (or more) Neural Networks training in conjunction.  You have 2 models with different roles:</p>
 <p>The Critic is the quality gauge on the Generator while the generator is what’s actually producing the data.  Let’s look at a summary of each of those.</p>
-<p><img alt="Critic Generator Summary" src="my_icons/CriticGenerator.png" /></p>
+<p><img alt="Critic Generator Summary" src="_images/CriticGenerator.png" /></p>
 <div class="section" id="how-they-train-together">
 <h3>How they train together<a class="headerlink" href="#how-they-train-together" title="Permalink to this headline">¶</a></h3>
 <p>There is a big loop where they pass information back and forth an dlearn.  Here’s generally how it works</p>
-<p><img alt="GAN Training Loop" src="my_icons/GANTrainingLoop.png" /></p>
+<p><img alt="GAN Training Loop" src="_images/GANTrainingLoop.png" /></p>
 </div>
 </div>
 <div class="section" id="first-challenges">
@@ -527,9 +541,19 @@ const thebe_selector_output = ".output, .cell_output"
 <p>A bit of background and how it’s accomplished:  A generator creates data from random noise vectors.  These random noise vectors can be thought of as random seeds in a sense.  If I give the generator the exact same vector of random numbers, it will generate the exact same data.  So those random number translate to output features in the data, so you can figure out how they map and then tweak away!</p>
 <p>Now, there’s a lot of execution details and challenges to making this happen that I am not covering in this post, but feel free to reach out if you’re interested and I can do a follow up post on the details on how to actually accomplish this.</p>
 <p>Here’s an example of what Photoshop is working on when it comes to controllable GANs.</p>
-<blockquote>
-<div><p>youtube: <a class="reference external" href="https://www.youtube.com/embed/iJs_nqu8P08">https://www.youtube.com/embed/iJs_nqu8P08</a></p>
-</div></blockquote>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="800"
+    height="400"
+    src="https://www.youtube.com/embed/iJs_nqu8P08"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+</div></div>
+</div>
 </div>
 </div>
 </div>

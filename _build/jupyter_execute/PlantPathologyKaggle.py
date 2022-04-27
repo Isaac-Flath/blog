@@ -4,18 +4,14 @@
 # # Plant Pathology Kaggle
 # > Creating a top 10 leaderboard submission for the Plant Pathology Kaggle Competition
 # 
-# - toc: true
-# - badges: true
-# - comments: true
-# - author: Isaac Flath
-# - categories: [Computer Vision, Image Classification, Kaggle]
+# Author: Isaac Flath
 # 
 
 # This post is looking at the [plant pathology kaggle competition](https://www.kaggle.com/c/plant-pathology-2020-fgvc7/) and showing how you could create a top 10 kaggle submission with fastai.  This is the first of a blog series where I will do this with historical kaggle competitions.  Many techniques will come from the [winning solution code base](https://github.com/alipay/cvpr2020-plant-pathology) by the "Alipay Tian Suan Security Lab Kaggle" team, but I will make a modifications as I see fit.  I will explain those as they come up.
 # 
 # The original code was in pytorch lightning.  I will be using Fastai, which will allow me to simplify the solution considerably without sacrificing results.
 
-# In[1]:
+# In[65]:
 
 
 from fastai.vision.all import *
@@ -61,7 +57,6 @@ class AlbumentationsTransform(RandTransform):
 # In[67]:
 
 
-#hide_output
 image_size = [480, 768]
 def get_train_aug(image_size): return Compose(
     [
@@ -89,7 +84,6 @@ def get_valid_aug(image_size): return  Compose(
 # In[68]:
 
 
-#hide_output
 item_tfms = [AlbumentationsTransform(get_train_aug(image_size), get_valid_aug(image_size))]
 batch_tfms = [Normalize.from_stats(*imagenet_stats)]
 
@@ -293,7 +287,6 @@ def test_predict(cnt,msg):
 # In[13]:
 
 
-# #hide_output
 skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=1)
 splits, preds, targs, preds_c,  = [],[],[],[]
 
@@ -400,3 +393,9 @@ train.head()
 # Just remember If you got the results you are looking for in a significantly easier way than you have thought - This is a good thing and a testament to the power of the library (fastai).  This not an indication that you are using a beginner tool.  Fastai takes care of all the normal SoTA best practices for you so you can focus on bleeding edge implementations or problem specific challenges.  Sometimes that means when you go to implement something or work a problem it "just works" with lot less effort than you were expecting and you are left thinking "That's it?".  How could that possibly be a reasonable reason not to use the library or to think it's not an effective library?
 # 
 # > twitter: https://twitter.com/BBrainkite/status/1359192051837984778
+
+# In[ ]:
+
+
+
+

@@ -309,6 +309,7 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="binary-search">
 <h1>Binary Search<a class="headerlink" href="#binary-search" title="Permalink to this headline">¶</a></h1>
+<p>Author: Isaac Flath</p>
 <p>This is a binary search problem.  Given a rectangular grid and a start location, I must find the end location.</p>
 <p>While I do not know the end location, after every step I will be given a direction (ie. UL, DR, L, etc.)</p>
 <p>This problem is from codingame</p>
@@ -462,21 +463,21 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val max_sz : int = 1000000
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val w : int = 326685
-val h : int = 809344
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val w : int = 192869
+val h : int = 233428
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val current_loc : int * int = (291071, 435030)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val current_loc : int * int = (71467, 101453)
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val bomb_loc : int * int = (298160, 349399)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val bomb_loc : int * int = (69195, 180906)
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val board : int * int * int * int = (0, 326685, 0, 809344)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val board : int * int * int * int = (0, 192869, 0, 233428)
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val current_loc : (int * int) * (int * int * int * int) =
-  ((291071, 435030), (0, 326685, 0, 809344))
+  ((71467, 101453), (0, 192869, 0, 233428))
 </pre></div>
 </div>
 </div>
@@ -488,88 +489,32 @@ val h : int = 809344
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 0x326685x0x809344  |  Bomb: 298160x349399  |  Loc: 291071x435030  |  Direction: UR
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 291071x326685x0x435030  |  Bomb: 298160x349399  |  Loc: 308878x217515  |  Direction: DL
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 291071x308878x217515x435030  |  Bomb: 298160x349399  |  Loc: 299974x326272  |  Direction: DL
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 291071x299974x326272x435030  |  Bomb: 298160x349399  |  Loc: 295522x380651  |  Direction: UR
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 295522x299974x326272x380651  |  Bomb: 298160x349399  |  Loc: 297748x335861  |  Direction: DR
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 297748x299974x335861x380651  |  Bomb: 298160x349399  |  Loc: 298861x358256  |  Direction: UL
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 297748x298861x335861x358256  |  Bomb: 298160x349399  |  Loc: 298304x347058  |  Direction: DL
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 297748x298304x347058x358256  |  Bomb: 298160x349399  |  Loc: 298026x352657  |  Direction: UR
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298026x298304x347058x352657  |  Bomb: 298160x349399  |  Loc: 298165x325202  |  Direction: DL
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298026x298165x325202x352657  |  Bomb: 298160x349399  |  Loc: 298095x338929  |  Direction: DR
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298095x298165x338929x352657  |  Bomb: 298160x349399  |  Loc: 298130x345793  |  Direction: DR
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298130x298165x345793x352657  |  Bomb: 298160x349399  |  Loc: 298147x349225  |  Direction: DR
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298147x298165x349225x352657  |  Bomb: 298160x349399  |  Loc: 298156x350941  |  Direction: UR
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298156x298165x349225x350941  |  Bomb: 298160x349399  |  Loc: 298160x324544  |  Direction: D
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x324544x350941  |  Bomb: 298160x349399  |  Loc: 298160x337742  |  Direction: D
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x337742x350941  |  Bomb: 298160x349399  |  Loc: 298160x344341  |  Direction: D
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x344341x350941  |  Bomb: 298160x349399  |  Loc: 298160x347641  |  Direction: D
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x347641x350941  |  Bomb: 298160x349399  |  Loc: 298160x349291  |  Direction: D
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349291x350941  |  Bomb: 298160x349399  |  Loc: 298160x350116  |  Direction: U
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349291x350116  |  Bomb: 298160x349399  |  Loc: 298160x349703  |  Direction: U
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349291x349703  |  Bomb: 298160x349399  |  Loc: 298160x349497  |  Direction: U
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349291x349497  |  Bomb: 298160x349399  |  Loc: 298160x349394  |  Direction: D
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349394x349497  |  Bomb: 298160x349399  |  Loc: 298160x349445  |  Direction: U
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349394x349445  |  Bomb: 298160x349399  |  Loc: 298160x349419  |  Direction: U
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349394x349419  |  Bomb: 298160x349399  |  Loc: 298160x349406  |  Direction: U
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349394x349406  |  Bomb: 298160x349399  |  Loc: 298160x349400  |  Direction: U
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349394x349400  |  Bomb: 298160x349399  |  Loc: 298160x349397  |  Direction: D
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 298160x298160x349397x349400  |  Bomb: 298160x349399  |  Loc: 298160x349398  |  Direction: D
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Board: 0x698678x0x695949  |  Bomb: 155526x598617  |  Loc: 675006x606536  |  Direction: UL
+Board: 0x675006x0x606536  |  Bomb: 155526x598617  |  Loc: 337503x303268  |  Direction: DL
+Board: 0x337503x303268x606536  |  Bomb: 155526x598617  |  Loc: 168751x454902  |  Direction: DL
+Board: 0x168751x454902x606536  |  Bomb: 155526x598617  |  Loc: 84375x530719  |  Direction: DR
+Board: 84375x168751x530719x606536  |  Bomb: 155526x598617  |  Loc: 126563x568627  |  Direction: DR
+Board: 126563x168751x568627x606536  |  Bomb: 155526x598617  |  Loc: 147657x587581  |  Direction: DR
+Board: 147657x168751x587581x606536  |  Bomb: 155526x598617  |  Loc: 158204x597058  |  Direction: DL
+Board: 147657x158204x597058x606536  |  Bomb: 155526x598617  |  Loc: 152930x601797  |  Direction: UR
+Board: 152930x158204x597058x601797  |  Bomb: 155526x598617  |  Loc: 155567x374727  |  Direction: DL
+Board: 152930x155567x374727x601797  |  Bomb: 155526x598617  |  Loc: 154248x488262  |  Direction: DR
+Board: 154248x155567x488262x601797  |  Bomb: 155526x598617  |  Loc: 154907x545029  |  Direction: DR
+Board: 154907x155567x545029x601797  |  Bomb: 155526x598617  |  Loc: 155237x573413  |  Direction: DR
+Board: 155237x155567x573413x601797  |  Bomb: 155526x598617  |  Loc: 155402x587605  |  Direction: DR
+Board: 155402x155567x587605x601797  |  Bomb: 155526x598617  |  Loc: 155484x594701  |  Direction: DR
+Board: 155484x155567x594701x601797  |  Bomb: 155526x598617  |  Loc: 155525x598249  |  Direction: DR
+Board: 155525x155567x598249x601797  |  Bomb: 155526x598617  |  Loc: 155546x600023  |  Direction: UL
+Board: 155525x155546x598249x600023  |  Bomb: 155526x598617  |  Loc: 155535x599136  |  Direction: UL
+Board: 155525x155535x598249x599136  |  Bomb: 155526x598617  |  Loc: 155530x598692  |  Direction: UL
+Board: 155525x155530x598249x598692  |  Bomb: 155526x598617  |  Loc: 155527x598470  |  Direction: DL
+Board: 155525x155527x598470x598692  |  Bomb: 155526x598617  |  Loc: 155526x598581  |  Direction: D
+Board: 155526x155526x598581x598692  |  Bomb: 155526x598617  |  Loc: 155526x598636  |  Direction: U
+Board: 155526x155526x598581x598636  |  Bomb: 155526x598617  |  Loc: 155526x598608  |  Direction: D
+Board: 155526x155526x598608x598636  |  Bomb: 155526x598617  |  Loc: 155526x598622  |  Direction: U
+Board: 155526x155526x598608x598622  |  Bomb: 155526x598617  |  Loc: 155526x598615  |  Direction: D
+Board: 155526x155526x598615x598622  |  Bomb: 155526x598617  |  Loc: 155526x598618  |  Direction: U
+Board: 155526x155526x598615x598618  |  Bomb: 155526x598617  |  Loc: 155526x598616  |  Direction: D
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>- : string = &quot;success&quot;

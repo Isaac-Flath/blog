@@ -4,11 +4,8 @@
 # # CycleGAN Walk Through
 # > A walkthrough of key components to a pytorch CycleGAN implementation.
 # 
-# - toc: true
-# - badges: true
-# - comments: true
-# - author: Isaac Flath
-# - categories: [Computer Vision, GAN]
+# Author: Isaac Flath
+# 
 
 # In this post I will build on my [previous](https://isaac-flath.github.io/fastblog/computer%20vision/gan/2021/02/20/GANBasics.html) [posts](https://isaac-flath.github.io/fastblog/computer%20vision/gan/2021/03/01/StyleGanComponents.html) on GANs and talk about CycleGAN.  
 # 
@@ -132,10 +129,9 @@ class ImageDataset(Dataset):
 # 
 # >Note: If you think through the impact of batch vs Instance normalization you may realize that with BatchNorm the training for a particular image is effected by which images happen to be in the same batch.  This is because the mean and standard deviation are calculated across the entire batch, rather than for that image alone.
 
-# In[4]:
+# In[ ]:
 
 
-#collapse-hide
 class Discriminator(nn.Module):
     def __init__(self, input_nc):
         super(Discriminator, self).__init__()
@@ -181,7 +177,7 @@ class Discriminator(nn.Module):
 # 
 # The new thing is this ReflectionPad2d.
 
-# In[5]:
+# In[ ]:
 
 
 class Generator(nn.Module):
@@ -207,7 +203,7 @@ class Generator(nn.Module):
 # 
 # We then go through several downsampling layers.  A 3x3 convolution with stride 2 will result in a smaller feature map, which is exactly what we are doing to cause the downsampling.  It's all the usual suspects through: `convolutions`, `InstanceNorms`, and `ReLUs`.
 
-# In[6]:
+# In[ ]:
 
 
 # Downsampling

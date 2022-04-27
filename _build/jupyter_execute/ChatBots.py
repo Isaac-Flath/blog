@@ -5,11 +5,7 @@
 # 
 # > Improving Business Processes Using ML-Based Chatbots
 # 
-# - toc: true
-# - badges: true
-# - comments: true
-# - author: Isaac Flath
-# - categories: [NLP, Deep Learning]
+# Author: Isaac Flath
 
 # I developed a process and app for creating and deploying chatbots for support and question answering purposes for Novetta.  This solution focused on practicality including minimizing the dataset needed, minimizing training/retraining needed, eliminating the need to retrain if policies change, and empowering domain experts to expand and improve the responses of without requiring a ML engineer for every tweak.
 # 

@@ -4,11 +4,8 @@
 # # GAN Basics
 # > Summarizing the foundational concepts relating to GANs
 # 
-# - toc: true
-# - badges: true
-# - comments: true
-# - author: Isaac Flath
-# - categories: [Computer Vision, GAN]
+# Author: Isaac Flath
+# 
 
 # ## Purpose
 # 
@@ -31,7 +28,6 @@
 # We can also transfer images from one style to another.  Whether that's changing video of a horse to a zerbra or combining photos with art, [this medium aricle](https://medium.com/@purnasaigudikandula/artistic-neural-style-transfer-with-pytorch-1543e08cc38f) shows a cool example!
 # 
 # ![Dog Style Transfer](my_icons/DogStyleTransfer.jpeg)
-# 
 
 # #### A GAN can create new images
 # 
@@ -43,14 +39,26 @@
 # #### A GAN can help you draw
 # 
 # NVIDIA again shows a really cool video of how basic sketches cna be turned into realistic photos.  I can imagine how this could help people create art, visualize designs, and more!
-# 
-# > youtube: https://www.youtube.com/embed/p5U4NgVGAwg
+
+# In[3]:
+
+
+from IPython.display import YouTubeVideo
+
+YouTubeVideo('p5U4NgVGAwg', width=800, height=400)
+
 
 # #### A GAN can compose music
 # 
 # Another example is this song that was composed by AI.  The lyrics is a person, but the instrumentation is AI - a great example of Machine-Human collaboration.  You can see the GAN understood basic musical phrasing, hits, understood it can build to hits and go quiet for a couple beats before a large hit to add impact.  If I didn't know, I wouldn't have realized is was using AI
-# 
-# > youtube: https://www.youtube.com/embed/XUs6CznN8pw
+
+# In[4]:
+
+
+from IPython.display import YouTubeVideo
+
+YouTubeVideo('XUs6CznN8pw', width=800, height=400)
+
 
 # ## How Does it Work?
 # 
@@ -106,8 +114,14 @@
 # Now, there's a lot of execution details and challenges to making this happen that I am not covering in this post, but feel free to reach out if you're interested and I can do a follow up post on the details on how to actually accomplish this.
 # 
 # Here's an example of what Photoshop is working on when it comes to controllable GANs.
-# 
-# >youtube: https://www.youtube.com/embed/iJs_nqu8P08
+
+# In[6]:
+
+
+from IPython.display import YouTubeVideo
+
+YouTubeVideo('iJs_nqu8P08', width=800, height=400)
+
 
 # In[ ]:
 

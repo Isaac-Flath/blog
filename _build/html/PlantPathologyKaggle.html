@@ -376,13 +376,7 @@ const thebe_selector_output = ".output, .cell_output"
 <blockquote>
 <div><p>Creating a top 10 leaderboard submission for the Plant Pathology Kaggle Competition</p>
 </div></blockquote>
-<ul class="simple">
-<li><p>toc: true</p></li>
-<li><p>badges: true</p></li>
-<li><p>comments: true</p></li>
-<li><p>author: Isaac Flath</p></li>
-<li><p>categories: [Computer Vision, Image Classification, Kaggle]</p></li>
-</ul>
+<p>Author: Isaac Flath</p>
 <p>This post is looking at the <a class="reference external" href="https://www.kaggle.com/c/plant-pathology-2020-fgvc7/">plant pathology kaggle competition</a> and showing how you could create a top 10 kaggle submission with fastai.  This is the first of a blog series where I will do this with historical kaggle competitions.  Many techniques will come from the <a class="reference external" href="https://github.com/alipay/cvpr2020-plant-pathology">winning solution code base</a> by the “Alipay Tian Suan Security Lab Kaggle” team, but I will make a modifications as I see fit.  I will explain those as they come up.</p>
 <p>The original code was in pytorch lightning.  I will be using Fastai, which will allow me to simplify the solution considerably without sacrificing results.</p>
 <div class="section" id="transforms">
@@ -413,10 +407,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p>Now, we can define our transforms as normal.  These are from the code base I am working from.  I move Normalize to batch transforms and use the fastai normalize instead, which does it in a batch on the GPU in fastai. It’s a small performance boost.  With a dataset this small it probably just wasn’t worth the time to set that up on the GPU using pytorch lightning, but it’s free in fastai so may as well.</p>
-<div class="cell docutils container">
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide_output</span>
-<span class="n">image_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">480</span><span class="p">,</span> <span class="mi">768</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">480</span><span class="p">,</span> <span class="mi">768</span><span class="p">]</span>
 <span class="k">def</span> <span class="nf">get_train_aug</span><span class="p">(</span><span class="n">image_size</span><span class="p">):</span> <span class="k">return</span> <span class="n">Compose</span><span class="p">(</span>
     <span class="p">[</span>
         <span class="n">Resize</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">image_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="n">image_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
@@ -442,17 +435,10 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide_output</span>
-<span class="n">item_tfms</span> <span class="o">=</span> <span class="p">[</span><span class="n">AlbumentationsTransform</span><span class="p">(</span><span class="n">get_train_aug</span><span class="p">(</span><span class="n">image_size</span><span class="p">),</span> <span class="n">get_valid_aug</span><span class="p">(</span><span class="n">image_size</span><span class="p">))]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">item_tfms</span> <span class="o">=</span> <span class="p">[</span><span class="n">AlbumentationsTransform</span><span class="p">(</span><span class="n">get_train_aug</span><span class="p">(</span><span class="n">image_size</span><span class="p">),</span> <span class="n">get_valid_aug</span><span class="p">(</span><span class="n">image_size</span><span class="p">))]</span>
 <span class="n">batch_tfms</span> <span class="o">=</span> <span class="p">[</span><span class="n">Normalize</span><span class="o">.</span><span class="n">from_stats</span><span class="p">(</span><span class="o">*</span><span class="n">imagenet_stats</span><span class="p">)]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.6/site-packages/albumentations/augmentations/transforms.py:2611: UserWarning: blur_limit and sigma_limit minimum value can not be both equal to 0. blur_limit minimum value changed to 3.
-  &quot;blur_limit and sigma_limit minimum value can not be both equal to 0. &quot;
 </pre></div>
 </div>
 </div>
@@ -605,7 +591,7 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="optimizer-scheduler">
 <h2>Optimizer &amp; Scheduler<a class="headerlink" href="#optimizer-scheduler" title="Permalink to this headline">¶</a></h2>
 <p>In the original code base they had to write an Optimizer and Scheduler themselves in pytorch for use in pytorch lightning, but we can skip this.  The approach they used is the approach fastai uses by default.  It’s a good example of fastai having SoTA defaults that saves time without sacrificing results.</p>
-<p><img alt="" src="my_icons/fitonecycledoc.png" /></p>
+<p><img alt="" src="_images/fitonecycledoc.png" /></p>
 </div>
 <div class="section" id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
@@ -739,10 +725,9 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="getting-distilled-soft-labels">
 <h3>Getting Distilled (soft) labels<a class="headerlink" href="#getting-distilled-soft-labels" title="Permalink to this headline">¶</a></h3>
 <p>Here’s the 5 fold to get predictions on our entire training set.</p>
-<div class="cell docutils container">
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># #hide_output</span>
-<span class="n">skf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">skf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">splits</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">targs</span><span class="p">,</span> <span class="n">preds_c</span><span class="p">,</span>  <span class="o">=</span> <span class="p">[],[],[],[]</span>
 
 <span class="n">true</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">o</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">train</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
@@ -790,7 +775,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p>Great!  So that got us to third place with the best model already!  Here’s the fold scores.  Our second place model as well as an average of all 5 fold predictions were both also in the top 10.  We successfully got into the top 10 already with 3 submissions.  It is also helpful to note that the most reasonable 2 models to pick would be the average of all 5 fold predictions as well as the 3rd place submission based on the public leaderboard (as when choosing which to use in an active competition you wouldn’t be able to see the private leaderboard score).  Mission accomplished!</p>
 <p>First place in the competition had a Private Leaderboard score of 0.98445 with 10th place had 0.97883 for reference.</p>
 <p>As you can see, fastai is plenty capable to compete on the cutting edge at the top of kaggle competitions.</p>
-<p><img alt="" src="my_icons/First5Fold.png" /></p>
+<p><img alt="" src="_images/First5Fold.png" /></p>
 </div>
 <div class="section" id="training-with-soft-labeling">
 <h3>Training with Soft Labeling<a class="headerlink" href="#training-with-soft-labeling" title="Permalink to this headline">¶</a></h3>

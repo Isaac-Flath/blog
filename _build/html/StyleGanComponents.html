@@ -332,13 +332,7 @@ const thebe_selector_output = ".output, .cell_output"
 <blockquote>
 <div><p>Showing the key components to StyleGAN and how they work</p>
 </div></blockquote>
-<ul class="simple">
-<li><p>toc: true</p></li>
-<li><p>badges: true</p></li>
-<li><p>comments: true</p></li>
-<li><p>author: Isaac Flath</p></li>
-<li><p>categories: [Computer Vision, GAN]</p></li>
-</ul>
+<p>Author: Isaac Flath</p>
 <div class="section" id="intro">
 <h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
 <p>In this post I will cover several components needed for style GAN and build a basic one using those blocks.  I am not going to train it, or try to make a state of the art one.  Things will be simplified to the simplest form possible to understand the concept.  If you want to understand some of the key techniques used in modern SoTA GANs, this is the post for you!</p>
@@ -363,10 +357,9 @@ const thebe_selector_output = ".output, .cell_output"
 <img alt="_images/StyleGanComponents_4_0.png" src="_images/StyleGanComponents_4_0.png" />
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide</span>
-<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">truncnorm</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">truncnorm</span>
 
 <span class="k">def</span> <span class="nf">get_truncated_noise</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">z_dim</span><span class="p">,</span> <span class="n">truncation</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">truncnorm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="o">-</span><span class="n">truncation</span><span class="p">,</span> <span class="n">truncation</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">z_dim</span><span class="p">)))</span>
@@ -547,10 +540,9 @@ scale * norm_image + shift (ouput): torch.Size([32, 512, 4, 4])
 </div>
 <p>Now, you can implement progressive growing and put it all together.  Let’s see how that works in StyleGAN. As you can see we move from an 8x8 image to a 16x16 image.  StyleGAn will do this many times.</p>
 <p>Keep in mind all of this is simplified and scaled down from what is in StyleGAN.  The purpose of this blog was to communicate the core concepts and techniques used in StyleGAN, not necessarily show the practical applications.  Stay tuned for a blog that shows practical application of these concepts!</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide</span>
-<span class="k">class</span> <span class="nc">AdaIN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AdaIN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channels</span><span class="p">,</span> <span class="n">w_dim</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">instance_norm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">InstanceNorm2d</span><span class="p">(</span><span class="n">channels</span><span class="p">)</span>
@@ -617,9 +609,6 @@ scale * norm_image + shift (ouput): torch.Size([32, 512, 4, 4])
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ImageSize1      torch.Size([10, 3, 8, 8])
 ImageSize2      torch.Size([10, 3, 16, 16])
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[W NNPACK.cpp:51] Could not initialize NNPACK! Reason: Unsupported hardware.
 </pre></div>
 </div>
 </div>
