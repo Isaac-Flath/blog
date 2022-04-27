@@ -8,8 +8,18 @@ logo: logo.png
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: force
-
+  execute_notebooks: auto
+  exclude_patterns:
+    - 'APL - Geometry of Linear Equations (18.06_L1)'
+    - 'PseudoLabelingDataCleaning'
+    - 'PlantPathologyKaggle'
+    - 'MultiCatImageClassification'
+    - 'HierarchicalLossFunction'
+    - 'HierarchicalArchitecture'
+    - 'FineGrainImageClassification'
+    - 'FastaiPytorchTrainingLoop'
+    - 'CycleGanWalkThrough'
+    - 'CustomArchitectureResearch'
 # Define the name of the latex output file for PDF builds
 latex:
   latex_documents:
