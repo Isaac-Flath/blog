@@ -53,6 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Find Min Difference Between Int List" href="FindClosestNumbers.html" />
     <link rel="prev" title="Welcome to my blog" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -100,7 +101,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Binary Search
+   Binary Search (Ocaml-codingame)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="FindClosestNumbers.html">
+   Min Difference in List (Ocaml-codingame)
   </a>
  </li>
 </ul>
@@ -278,40 +284,42 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="binary-search">
 <h1>Binary Search<a class="headerlink" href="#binary-search" title="Permalink to this headline">¶</a></h1>
-<p><strong>Purpose:</strong> In this article we will explore binary search in ocaml</p>
-<div class="cell tag_remove-output docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="n">require</span> <span class="s2">&quot;jupyter.notebook&quot;</span> <span class="o">;;</span>
-<span class="c">(* #require &quot;jupyter-archimedes&quot; *)</span>
-</pre></div>
-</div>
-</div>
+<p>This is a binary search problem.  Given a rectangular grid and a start location, I must find the end location.</p>
+<p>While I do not know the end location, after every step I will be given a direction (ie. UL, DR, L, etc.)</p>
+<p>This problem is from codingame</p>
+<div class="cell tag_remove-output tag_remove-input docutils container">
 </div>
 <div class="section" id="problem-setup">
 <h2>Problem Setup<a class="headerlink" href="#problem-setup" title="Permalink to this headline">¶</a></h2>
-<p>For this problem we will be fed a direction, but we won’t know the exact coordinate.  Here we create the functions that given a current location and a target location gives us the direction (ie DR, or D)</p>
+<p>The first thing I need to do is calculate the direction of the target.  We can do that with a compare and match setup pretty easily.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">exception</span> <span class="nc">Damn</span> <span class="k">of</span> <span class="kt">string</span>
+<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">exception</span> <span class="nc">InvalidInput</span> <span class="k">of</span> <span class="kt">string</span>
 
 <span class="k">let</span> <span class="n">get_width_dir</span> <span class="n">bw</span> <span class="n">cw</span> <span class="o">=</span> 
   <span class="k">match</span> <span class="n">compare</span> <span class="n">cw</span> <span class="n">bw</span>  <span class="k">with</span>
-    <span class="o">|</span><span class="mi">0</span> <span class="o">-&gt;</span> <span class="s2">&quot;&quot;</span><span class="o">|</span><span class="mi">1</span> <span class="o">-&gt;</span> <span class="s2">&quot;L&quot;</span><span class="o">|(-</span><span class="mi">1</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;R&quot;</span><span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">Damn</span> <span class="s2">&quot;error&quot;</span><span class="o">)</span>
+    <span class="o">|</span><span class="mi">0</span> <span class="o">-&gt;</span> <span class="s2">&quot;&quot;</span>
+    <span class="o">|</span><span class="mi">1</span> <span class="o">-&gt;</span> <span class="s2">&quot;L&quot;</span>
+    <span class="o">|(-</span><span class="mi">1</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;R&quot;</span>
+    <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">InvalidInput</span> <span class="s2">&quot;error&quot;</span><span class="o">)</span>
 
 <span class="k">let</span> <span class="n">get_height_dir</span> <span class="n">bh</span> <span class="n">ch</span> <span class="o">=</span> 
   <span class="k">match</span> <span class="n">compare</span> <span class="n">ch</span> <span class="n">bh</span> <span class="k">with</span>
-    <span class="o">|</span><span class="mi">0</span> <span class="o">-&gt;</span> <span class="s2">&quot;&quot;</span> <span class="o">|</span><span class="mi">1</span> <span class="o">-&gt;</span> <span class="s2">&quot;U&quot;</span> <span class="o">|(-</span><span class="mi">1</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;D&quot;</span><span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">Damn</span> <span class="s2">&quot;error&quot;</span><span class="o">)</span>
+    <span class="o">|</span><span class="mi">0</span> <span class="o">-&gt;</span> <span class="s2">&quot;&quot;</span> 
+    <span class="o">|</span><span class="mi">1</span> <span class="o">-&gt;</span> <span class="s2">&quot;U&quot;</span> 
+    <span class="o">|(-</span><span class="mi">1</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;D&quot;</span>
+    <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">InvalidInput</span> <span class="s2">&quot;error&quot;</span><span class="o">)</span>
 
-<span class="k">let</span> <span class="n">get_direction</span> <span class="n">currentloc</span> <span class="n">bombloc</span> <span class="o">=</span> 
-  <span class="k">let</span> <span class="n">bw</span><span class="o">,</span><span class="n">bh</span> <span class="o">=</span> <span class="n">bombloc</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="o">((</span><span class="n">cw</span><span class="o">,</span><span class="n">ch</span><span class="o">),(_,_,_,_))</span> <span class="o">=</span> <span class="n">currentloc</span> <span class="k">in</span>
+<span class="k">let</span> <span class="n">get_direction</span> <span class="n">loc</span> <span class="n">target</span> <span class="o">=</span> 
+  <span class="k">let</span> <span class="n">bw</span><span class="o">,</span><span class="n">bh</span> <span class="o">=</span> <span class="n">target</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">((</span><span class="n">cw</span><span class="o">,</span><span class="n">ch</span><span class="o">),(_,_,_,_))</span> <span class="o">=</span> <span class="n">loc</span> <span class="k">in</span>
 
   <span class="o">(</span><span class="n">get_height_dir</span> <span class="n">bh</span> <span class="n">ch</span><span class="o">)</span> <span class="o">^</span> <span class="o">(</span><span class="n">get_width_dir</span> <span class="n">bw</span> <span class="n">cw</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>exception Damn of string
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>exception InvalidInput of string
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val get_width_dir : &#39;a -&gt; &#39;a -&gt; string = &lt;fun&gt;
@@ -329,12 +337,18 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="step-function">
 <h2>Step Function<a class="headerlink" href="#step-function" title="Permalink to this headline">¶</a></h2>
-<p>Next we need to write out step function.  Every step is to the center of the available board, and we shrink the available board with each step as we are given the location.</p>
+<p>Next we need to write a function to choose our next step.</p>
+<p>For this first approach, I follow this 2 step process:</p>
+<ol class="simple">
+<li><p>Based on my location and direction of target, shrink the rectangle of possible target cells</p></li>
+<li><p>Select location in the middle of the location</p></li>
+</ol>
+<p>This ensures I get the most information possible with each step.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">take_step</span> <span class="n">currentloc</span> <span class="n">dir</span> <span class="o">=</span>
-  <span class="k">let</span> <span class="o">((</span><span class="n">cw</span><span class="o">,</span><span class="n">ch</span><span class="o">),(</span><span class="n">w0</span><span class="o">,</span><span class="n">w1</span><span class="o">,</span><span class="n">h0</span><span class="o">,</span><span class="n">h1</span><span class="o">))</span> <span class="o">=</span> <span class="n">currentloc</span> <span class="k">in</span>
-  <span class="k">match</span> <span class="n">dir</span> <span class="k">with</span> 
+<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">take_step1</span> <span class="n">loc</span> <span class="n">direction</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">((</span><span class="n">cw</span><span class="o">,</span><span class="n">ch</span><span class="o">),(</span><span class="n">w0</span><span class="o">,</span><span class="n">w1</span><span class="o">,</span><span class="n">h0</span><span class="o">,</span><span class="n">h1</span><span class="o">))</span> <span class="o">=</span> <span class="n">loc</span> <span class="k">in</span>
+  <span class="k">match</span> <span class="n">direction</span> <span class="k">with</span> 
         <span class="o">|</span><span class="s2">&quot;L&quot;</span> <span class="o">-&gt;</span> <span class="o">(((</span><span class="n">w0</span><span class="o">+</span><span class="n">cw</span><span class="o">)/</span><span class="mi">2</span><span class="o">,</span><span class="n">ch</span><span class="o">),(</span><span class="n">w0</span><span class="o">,</span><span class="n">cw</span><span class="o">,</span><span class="n">ch</span><span class="o">,</span><span class="n">ch</span><span class="o">))</span>
         <span class="o">|</span><span class="s2">&quot;R&quot;</span> <span class="o">-&gt;</span> <span class="o">(((</span><span class="n">cw</span><span class="o">+</span><span class="n">w1</span><span class="o">)/</span><span class="mi">2</span><span class="o">,</span><span class="n">ch</span><span class="o">),(</span><span class="n">cw</span><span class="o">,</span><span class="n">w1</span><span class="o">,</span><span class="n">ch</span><span class="o">,</span><span class="n">ch</span><span class="o">))</span>
         <span class="o">|</span><span class="s2">&quot;U&quot;</span> <span class="o">-&gt;</span> <span class="o">((</span><span class="n">cw</span><span class="o">,(</span><span class="n">h0</span><span class="o">+</span><span class="n">ch</span><span class="o">)/</span><span class="mi">2</span><span class="o">),(</span><span class="n">cw</span><span class="o">,</span><span class="n">cw</span><span class="o">,</span><span class="n">h0</span><span class="o">,</span><span class="n">ch</span><span class="o">))</span>
@@ -343,12 +357,12 @@ const thebe_selector_output = ".output, .cell_output"
         <span class="o">|</span><span class="s2">&quot;UR&quot;</span> <span class="o">-&gt;</span> <span class="o">(((</span><span class="n">cw</span><span class="o">+</span><span class="n">w1</span><span class="o">)/</span><span class="mi">2</span><span class="o">,(</span><span class="n">w0</span><span class="o">+</span><span class="n">ch</span><span class="o">)/</span><span class="mi">2</span><span class="o">),(</span><span class="n">cw</span><span class="o">,</span><span class="n">w1</span><span class="o">,</span><span class="n">h0</span><span class="o">,</span><span class="n">ch</span><span class="o">))</span>
         <span class="o">|</span><span class="s2">&quot;DL&quot;</span> <span class="o">-&gt;</span> <span class="o">(((</span><span class="n">w0</span><span class="o">+</span><span class="n">cw</span><span class="o">)/</span><span class="mi">2</span><span class="o">,(</span><span class="n">ch</span><span class="o">+</span><span class="n">h1</span><span class="o">)/</span><span class="mi">2</span><span class="o">),(</span><span class="n">w0</span><span class="o">,</span><span class="n">cw</span><span class="o">,</span><span class="n">ch</span><span class="o">,</span><span class="n">h1</span><span class="o">))</span>
         <span class="o">|</span><span class="s2">&quot;DR&quot;</span> <span class="o">-&gt;</span> <span class="o">(((</span><span class="n">cw</span><span class="o">+</span><span class="n">w1</span><span class="o">)/</span><span class="mi">2</span><span class="o">,(</span><span class="n">ch</span><span class="o">+</span><span class="n">h1</span><span class="o">)/</span><span class="mi">2</span><span class="o">),(</span><span class="n">cw</span><span class="o">,</span><span class="n">w1</span><span class="o">,</span><span class="n">ch</span><span class="o">,</span><span class="n">h1</span><span class="o">))</span>
-        <span class="o">|_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">Damn</span> <span class="s2">&quot;error&quot;</span><span class="o">)</span>
+        <span class="o">|_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">InvalidInput</span> <span class="s2">&quot;error&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val take_step :
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val take_step1 :
   (int * int) * (int * int * int * int) -&gt;
   string -&gt; (int * int) * (int * int * int * int) = &lt;fun&gt;
 </pre></div>
@@ -358,16 +372,17 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="the-test-loop">
 <h2>The Test Loop<a class="headerlink" href="#the-test-loop" title="Permalink to this headline">¶</a></h2>
-<p>We will create a test loop that will iterate through until it finds a solution, with some printing so we can see what it’s doing.</p>
+<p>Next we need a test loop (recursion) that wil continue to run until I find the target location.</p>
+<p>First I define a function that will print out information.  This is helpful in seeing what it’s doing at each step and debugging.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">print_step</span> <span class="n">bl</span> <span class="n">cl</span> <span class="n">bd</span> <span class="o">=</span>
-    <span class="k">let</span> <span class="o">((</span><span class="n">ow</span><span class="o">,</span><span class="n">oh</span><span class="o">),(</span><span class="n">bw1</span><span class="o">,</span><span class="n">bw2</span><span class="o">,</span><span class="n">bh1</span><span class="o">,</span><span class="n">bh2</span><span class="o">))</span> <span class="o">=</span> <span class="n">cl</span> <span class="k">in</span>
-    <span class="k">let</span> <span class="n">bw</span><span class="o">,</span> <span class="n">bh</span> <span class="o">=</span> <span class="n">bl</span> <span class="k">in</span>
+<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">print_step</span> <span class="n">target</span> <span class="n">loc</span> <span class="n">direction</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="o">((</span><span class="n">ow</span><span class="o">,</span><span class="n">oh</span><span class="o">),(</span><span class="n">bw1</span><span class="o">,</span><span class="n">bw2</span><span class="o">,</span><span class="n">bh1</span><span class="o">,</span><span class="n">bh2</span><span class="o">))</span> <span class="o">=</span> <span class="n">loc</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">bw</span><span class="o">,</span> <span class="n">bh</span> <span class="o">=</span> <span class="n">target</span> <span class="k">in</span>
     <span class="n">print_endline</span> <span class="o">(</span><span class="s2">&quot;Board: &quot;</span> <span class="o">^</span> <span class="n">string_of_int</span> <span class="n">bw1</span> <span class="o">^</span> <span class="s2">&quot;x&quot;</span><span class="o">^</span> <span class="n">string_of_int</span> <span class="n">bw2</span> <span class="o">^</span> <span class="s2">&quot;x&quot;</span><span class="o">^</span> <span class="n">string_of_int</span> <span class="n">bh1</span> <span class="o">^</span> <span class="s2">&quot;x&quot;</span><span class="o">^</span> <span class="n">string_of_int</span> <span class="n">bh2</span> <span class="o">^</span> <span class="s2">&quot;  |  &quot;</span> <span class="o">^</span>
               <span class="s2">&quot;Bomb: &quot;</span> <span class="o">^</span> <span class="n">string_of_int</span> <span class="n">bw</span> <span class="o">^</span> <span class="s2">&quot;x&quot;</span> <span class="o">^</span> <span class="n">string_of_int</span> <span class="n">bh</span> <span class="o">^</span> <span class="s2">&quot;  |  &quot;</span> <span class="o">^</span> 
               <span class="s2">&quot;Loc: &quot;</span> <span class="o">^</span> <span class="n">string_of_int</span> <span class="n">ow</span> <span class="o">^</span> <span class="s2">&quot;x&quot;</span> <span class="o">^</span> <span class="n">string_of_int</span> <span class="n">oh</span> <span class="o">^</span> <span class="s2">&quot;  |  &quot;</span> <span class="o">^</span> 
-              <span class="s2">&quot;Direction: &quot;</span> <span class="o">^</span> <span class="n">bd</span><span class="o">);</span>
+              <span class="s2">&quot;Direction: &quot;</span> <span class="o">^</span> <span class="n">direction</span><span class="o">);</span>
 </pre></div>
 </div>
 </div>
@@ -381,24 +396,22 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">loc</span> <span class="n">acc</span> <span class="n">printf</span> <span class="n">bl</span><span class="o">=</span>
-    <span class="k">let</span> <span class="n">bombdir</span> <span class="o">=</span> <span class="n">get_direction</span> <span class="n">loc</span> <span class="n">bl</span> <span class="k">in</span>
-    <span class="n">printf</span> <span class="n">bl</span> <span class="n">loc</span> <span class="n">bombdir</span><span class="o">;</span>
+<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">loc</span> <span class="n">printf</span> <span class="n">target</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">direction</span> <span class="o">=</span> <span class="n">get_direction</span> <span class="n">loc</span> <span class="n">target</span> <span class="k">in</span>
+    <span class="n">printf</span> <span class="n">target</span> <span class="n">loc</span> <span class="n">direction</span><span class="o">;</span>
 
-    <span class="k">let</span> <span class="n">out</span> <span class="o">=</span> <span class="n">take_step</span> <span class="n">loc</span> <span class="n">bombdir</span> <span class="k">in</span>
-    <span class="k">let</span> <span class="o">((</span><span class="n">ow</span><span class="o">,</span><span class="n">oh</span><span class="o">),(</span><span class="n">bw1</span><span class="o">,</span><span class="n">bw2</span><span class="o">,</span><span class="n">bh1</span><span class="o">,</span><span class="n">bh2</span><span class="o">))</span> <span class="o">=</span> <span class="n">out</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">out</span> <span class="o">=</span> <span class="n">take_step1</span> <span class="n">loc</span> <span class="n">direction</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="o">((</span><span class="n">ow</span><span class="o">,</span><span class="n">oh</span><span class="o">),(</span><span class="n">tw1</span><span class="o">,</span><span class="n">tw2</span><span class="o">,</span><span class="n">th1</span><span class="o">,</span><span class="n">th2</span><span class="o">))</span> <span class="o">=</span> <span class="n">out</span> <span class="k">in</span>
 
 
-    <span class="k">if</span> <span class="o">(</span><span class="n">ow</span><span class="o">,</span><span class="n">oh</span><span class="o">)=(</span><span class="n">bl</span><span class="o">)</span> <span class="k">then</span> <span class="s2">&quot;success&quot;</span> 
-    <span class="k">else</span> <span class="k">if</span> <span class="n">acc</span> <span class="o">&gt;</span> <span class="mi">200</span> <span class="k">then</span> <span class="s2">&quot;200 iters&quot;</span>
-    <span class="k">else</span> <span class="n">loop</span> <span class="n">out</span> <span class="o">(</span><span class="n">acc</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="n">printf</span> <span class="n">bl</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">ow</span><span class="o">,</span><span class="n">oh</span><span class="o">)=(</span><span class="n">target</span><span class="o">)</span> <span class="k">then</span> <span class="s2">&quot;success&quot;</span> 
+    <span class="k">else</span> <span class="n">loop</span> <span class="n">out</span> <span class="n">printf</span> <span class="n">target</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val loop :
   (int * int) * (int * int * int * int) -&gt;
-  int -&gt;
   (int * int -&gt; (int * int) * (int * int * int * int) -&gt; string -&gt; &#39;a) -&gt;
   int * int -&gt; string = &lt;fun&gt;
 </pre></div>
@@ -411,8 +424,8 @@ const thebe_selector_output = ".output, .cell_output"
 <p>We can see that even when run with a pretty large random size and locations setup, we solve the problem in relatively few steps.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">sz</span> <span class="o">=</span> <span class="mi">1_000_000</span>
-<span class="k">let</span> <span class="n">w</span><span class="o">,</span><span class="n">h</span> <span class="o">=</span> <span class="o">(</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">sz</span><span class="o">,</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">sz</span><span class="o">)</span>
+<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">max_sz</span> <span class="o">=</span> <span class="mi">1_000_000</span>
+<span class="k">let</span> <span class="n">w</span><span class="o">,</span><span class="n">h</span> <span class="o">=</span> <span class="o">(</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">max_sz</span><span class="o">,</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">max_sz</span><span class="o">)</span>
 <span class="k">let</span> <span class="n">current_loc</span> <span class="o">=</span> <span class="o">(</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">w</span><span class="o">,</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">h</span><span class="o">)</span>
 <span class="k">let</span> <span class="n">bomb_loc</span> <span class="o">=</span> <span class="o">(</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">w</span><span class="o">,</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">h</span><span class="o">)</span>
 <span class="k">let</span> <span class="n">board</span> <span class="o">=</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="n">w</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="n">h</span><span class="o">)</span>
@@ -421,7 +434,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val sz : int = 1000000
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val max_sz : int = 1000000
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>val w : int = 326685
@@ -445,7 +458,7 @@ val h : int = 809344
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="n">loop</span> <span class="n">current_loc</span> <span class="mi">0</span> <span class="n">print_step</span> <span class="n">bomb_loc</span>
+<div class="highlight-OCaml notranslate"><div class="highlight"><pre><span></span><span class="n">loop</span> <span class="n">current_loc</span> <span class="n">print_step</span> <span class="n">bomb_loc</span>
 </pre></div>
 </div>
 </div>
@@ -573,6 +586,13 @@ val h : int = 809344
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Welcome to my blog</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="FindClosestNumbers.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Find Min Difference Between Int List</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             
