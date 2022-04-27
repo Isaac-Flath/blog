@@ -17,29 +17,28 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-train_dataloader = DataLoader(ImageDataset('datasets/summer2winter_yosemite', transforms_=transforms_train, unaligned=True),batch_size=1, shuffle=True, num_workers=8)
-train_dataloader.dataset.show_batch()
+        # Downsampling
+        in_features = 64
+        out_features = in_features*2
+        for _ in range(2):
+            model += [  nn.Conv2d(in_features, out_features, 3, stride=2, padding=1),
+                        nn.InstanceNorm2d(out_features),
+                        nn.ReLU(inplace=True) ]
+            in_features = out_features
+            out_features = in_features*2
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mValueError[0m                                Traceback (most recent call last)
-Input [0;32mIn [4][0m, in [0;36m<cell line: 2>[0;34m()[0m
-[1;32m      1[0m train_dataloader [38;5;241m=[39m DataLoader(ImageDataset([38;5;124m'[39m[38;5;124mdatasets/summer2winter_yosemite[39m[38;5;124m'[39m, transforms_[38;5;241m=[39mtransforms_train, unaligned[38;5;241m=[39m[38;5;28;01mTrue[39;00m),batch_size[38;5;241m=[39m[38;5;241m1[39m, shuffle[38;5;241m=[39m[38;5;28;01mTrue[39;00m, num_workers[38;5;241m=[39m[38;5;241m8[39m)
-[0;32m----> 2[0m [43mtrain_dataloader[49m[38;5;241;43m.[39;49m[43mdataset[49m[38;5;241;43m.[39;49m[43mshow_batch[49m[43m([49m[43m)[49m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Input [0;32mIn [6][0m, in [0;36m<cell line: 4>[0;34m()[0m
+[1;32m      3[0m out_features [38;5;241m=[39m in_features[38;5;241m*[39m[38;5;241m2[39m
+[1;32m      4[0m [38;5;28;01mfor[39;00m _ [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;241m2[39m):
+[0;32m----> 5[0m     model [38;5;241m+[39m[38;5;241m=[39m [  nn[38;5;241m.[39mConv2d(in_features, out_features, [38;5;241m3[39m, stride[38;5;241m=[39m[38;5;241m2[39m, padding[38;5;241m=[39m[38;5;241m1[39m),
+[1;32m      6[0m                 nn[38;5;241m.[39mInstanceNorm2d(out_features),
+[1;32m      7[0m                 nn[38;5;241m.[39mReLU(inplace[38;5;241m=[39m[38;5;28;01mTrue[39;00m) ]
+[1;32m      8[0m     in_features [38;5;241m=[39m out_features
+[1;32m      9[0m     out_features [38;5;241m=[39m in_features[38;5;241m*[39m[38;5;241m2[39m
 
-Input [0;32mIn [3][0m, in [0;36mImageDataset.show_batch[0;34m(self, sets, cols)[0m
-[1;32m     18[0m [38;5;28;01mdef[39;00m [38;5;21mshow_batch[39m([38;5;28mself[39m,sets[38;5;241m=[39m[38;5;241m2[39m, cols[38;5;241m=[39m[38;5;241m3[39m):
-[0;32m---> 19[0m     idxs [38;5;241m=[39m [43mrandom[49m[38;5;241;43m.[39;49m[43msample[49m[43m([49m[38;5;28;43mrange[39;49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[38;5;21;43m__len__[39;49m[43m([49m[43m)[49m[43m)[49m[43m,[49m[43m [49m[43mcols[49m[38;5;241;43m*[39;49m[38;5;241;43m2[39;49m[38;5;241;43m*[39;49m[43msets[49m[43m)[49m        
-[1;32m     20[0m     fig, ax [38;5;241m=[39m plt[38;5;241m.[39msubplots([38;5;241m2[39m[38;5;241m*[39msets, cols,figsize[38;5;241m=[39m([38;5;241m4[39m[38;5;241m*[39mcols,[38;5;241m4[39m[38;5;241m*[39m[38;5;241m2[39m[38;5;241m*[39msets))
-[1;32m     22[0m     [38;5;28;01mfor[39;00m r [38;5;129;01min[39;00m [38;5;28mrange[39m(sets):
-
-File [0;32m~/opt/miniconda3/lib/python3.9/random.py:449[0m, in [0;36mRandom.sample[0;34m(self, population, k, counts)[0m
-[1;32m    447[0m randbelow [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_randbelow
-[1;32m    448[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;241m0[39m [38;5;241m<[39m[38;5;241m=[39m k [38;5;241m<[39m[38;5;241m=[39m n:
-[0;32m--> 449[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([38;5;124m"[39m[38;5;124mSample larger than population or is negative[39m[38;5;124m"[39m)
-[1;32m    450[0m result [38;5;241m=[39m [[38;5;28;01mNone[39;00m] [38;5;241m*[39m k
-[1;32m    451[0m setsize [38;5;241m=[39m [38;5;241m21[39m        [38;5;66;03m# size of a small set minus size of an empty list[39;00m
-
-[0;31mValueError[0m: Sample larger than population or is negative
-ValueError: Sample larger than population or is negative
+[0;31mNameError[0m: name 'model' is not defined
+NameError: name 'model' is not defined
 
