@@ -10,7 +10,6 @@ chapters:
   title: Min Difference in List (Ocaml-codingame)
 - file: PlantPathologyKaggle
 - file: ChatBots
-- file: NeuralNetworksXOR
 - file: StyleGanComponents
 - file: GANBasics
 - file: CycleGanWalkThrough
